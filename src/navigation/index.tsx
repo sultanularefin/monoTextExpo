@@ -12,13 +12,20 @@ import { ColorSchemeName, Pressable } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import ModalScreen from '../screens/ModalScreen';
+import UserAnalyzer_Page from '../screens/UserAnalyzer_Page';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
+
+import {
+    StyleSheet,
+    // useWindowDimensions,
+} from 'react-native';
+import EditUserAnalyzer_Page from "../screens/EditUserAnalyzer_Page";
+import Filter_People_Page from "../screens/Filter_People_Page";
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
     return (
         <NavigationContainer
@@ -37,24 +44,51 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
     return (
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName={"Filter_People_Page"}>
+
 
             <Stack.Group screenOptions={{ presentation: 'modal' }}>
                 <Stack.Screen
-                    name="Modal"
-                    component={ModalScreen}
+                    name="EditUserAnalyzer_Page"
+                    component={EditUserAnalyzer_Page}
                     options={{
-
-                        headerShown: false
+                        headerShown: false,
+                    }}
+                />
+                <Stack.Screen
+                    name="UserAnalyzer_Page"
+                    component={UserAnalyzer_Page}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+                <Stack.Screen
+                    name="Filter_People_Page"
+                    component={Filter_People_Page}
+                    options={{
+                        headerShown: false,
                     }}
                 />
             </Stack.Group>
+
+
+
+
             <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
             <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
 
         </Stack.Navigator>
     );
 }
+
+const AppStyles = StyleSheet.create({
+    commonHeaderStyle64: {
+        backgroundColor: 'white',
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        borderBottomColor: 'black',
+    },
+
+});
 
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
@@ -79,7 +113,7 @@ function BottomTabNavigator() {
                     tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
                     headerRight: () => (
                         <Pressable
-                            onPress={() => navigation.navigate('Modal')}
+                            onPress={() => navigation.navigate('UserAnalyzer_Page')}
                             style={({ pressed }) => ({
                                 opacity: pressed ? 0.5 : 1,
                             })}>
@@ -114,3 +148,5 @@ function TabBarIcon(props: {
 }) {
     return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
 }
+
+

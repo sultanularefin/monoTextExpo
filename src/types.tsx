@@ -6,6 +6,9 @@
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import UserAnalyzer_Page from "./screens/UserAnalyzer_Page";
+import EditUserAnalyzer_Page from "./screens/EditUserAnalyzer_Page";
+import Filter_People_Page from "./screens/Filter_People_Page";
 
 declare global {
   namespace ReactNavigation {
@@ -15,8 +18,10 @@ declare global {
 
 export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
-  Modal: undefined;
+  UserAnalyzer_Page: undefined;
   NotFound: undefined;
+  EditUserAnalyzer_Page: undefined;
+  Filter_People_Page: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
