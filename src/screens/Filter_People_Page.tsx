@@ -3,7 +3,7 @@ import {
     FlatList,
     Image, KeyboardAvoidingView,
     Platform, SafeAreaView, ScrollView,
-    StyleSheet,
+    StyleSheet, TextInput,
     TouchableOpacity,
     useWindowDimensions,
 } from 'react-native';
@@ -11,7 +11,8 @@ import {
 import DateTimePicker from '@react-native-community/datetimepicker';
 import EditScreenInfo from '../components/EditScreenInfo';
 
-import { Ionicons } from '@expo/vector-icons';
+import {Ionicons, Octicons,MaterialCommunityIcons} from '@expo/vector-icons';
+
 // import Ionicons from "react-native-vector-icons/Ionicons";
 
 import {
@@ -19,12 +20,13 @@ import {
     View,
 } from '../components/Themed';
 import {MonoText} from "../components/StyledText";
-import {useState} from "react";
+import {useRef, useState} from "react";
 import StartDate from "./userAnalyzerComponents_Android/StartDate";
 import EndDate from "./userAnalyzerComponents_Android/EndDate";
 import CheckBoxComponent from "./userAnalyzerComponents_Android/CheckBoxComponent";
 import {useAppDispatch} from "../appStore/app/hooks";
 import {CommonActions} from "@react-navigation/native";
+import Search_People from "./filter_People_Components/Search_People";
 
 
 const calendarImage = require('../../assets/images/date_icon.png');
@@ -120,106 +122,12 @@ const Filter_People_Page: React.FC<Filter_People_Page_Props> = ({props, navigati
 
 
 
+    const ref_User_Search = useRef<TextInput>(null);
 
+    const [search_State, set_Search_State] = useState('');
 
     const displayWidth = useWindowDimensions().width;
     const displayHeight = useWindowDimensions().height;
-
-
-
-
-    const onChangeStartDate = (event: Event, selectedDate: Date) => {
-
-
-
-        if(event.type ==='neutralButtonPressed'){
-
-            const currentDate = new Date();
-            setShowStartState(Platform.OS === 'ios');
-            setStartDateValueState(currentDate);
-        }
-
-        else {
-
-            const currentDate = selectedDate || start_Date_Value_State;
-
-
-            setShowStartState(Platform.OS === 'ios');
-            setStartDateValueState(currentDate);
-        }
-
-
-
-
-    };
-
-
-
-    const showMode = (currentMode:any) => {
-        setShowStartState(true);
-        setModeStateStartTime(currentMode);
-    };
-
-    const show_Datepicker_Start = () => {
-        showMode('date');
-    };
-
-
-
-    const showModeEndDate = (currentMode:any) => {
-
-        setShowEndState(true);
-        setModeStateEndTime(currentMode);
-
-
-    };
-
-    const show_Datepicker_End_Date = () => {
-
-        console.log('show_Datepicker_End_Date :..');
-        showModeEndDate('date');
-    };
-
-
-
-    const onChangeEndDate = (event: Event, selectedDate: Date) => {
-
-
-
-        if(event.type ==='neutralButtonPressed'){
-
-            const currentDate = new Date();
-            setShowEndState(Platform.OS === 'ios');
-            setEndtDateValueState(currentDate);
-        }
-
-        else {
-            // const currentDate = selectedDate || dateValueState;
-            // setShow(Platform.OS === 'ios');
-            // setDateValueState(currentDate);
-
-
-
-
-
-            const currentDate = selectedDate || end_Date_Value_State;
-
-            console.log('currentDate: ', currentDate);
-
-            setShowEndState(Platform.OS === 'ios');
-            setEndtDateValueState(currentDate);
-        }
-
-
-
-
-
-    };
-
-
-
-
-
 
 
 
@@ -231,32 +139,23 @@ const Filter_People_Page: React.FC<Filter_People_Page_Props> = ({props, navigati
         // );
     }
 
+    const clearSearch = () => {
+        // console.log('at clearSearch: ');
+        set_Search_State('');
 
+        ref_User_Search?.current?.clear();
 
-
-
-    const update_CheckBox_ = (
-        index:number,
-        value:boolean) => {
-
-
-        const payLoad_update_Partner_Group_selected:checkBox_update_for_forward__Chat ={
-
-            index:index,
-            value:value,
-
-        };
-
-        console.log("payLoad_update_Partner_Group_selected: ",payLoad_update_Partner_Group_selected);
-
-        // dispatch(update_Forward_CheckBox_Selected_Grp_Partner(payLoad_update_Partner_Group_selected));
-
-
-
-
-
+        // setActiveChatListStateAndNotSearchState(true);
 
     };
+
+    const searchFilterFunction = (text: string) => {
+
+
+        set_Search_State(text);
+
+    };
+
 
 
 
@@ -281,92 +180,102 @@ const Filter_People_Page: React.FC<Filter_People_Page_Props> = ({props, navigati
 
                 {/*teal navigator custom begins here...*/}
 
+                <View
+                    style={{
+                        // flex: 0.8,
+                        height: displayHeight/20,
+                        backgroundColor: 'white',
+                        flexDirection: 'column',
+                        justifyContent: 'flex-start',
+                    }}
+                >
+                </View>
+
+                {/*Teal begins here.. 2nd iteration*/}
                 <View style={{
-                    flex:1.5,
-                    flexDirection: "column",
+                    height: displayHeight/10,
+                    // backgroundColor: 'white',
+                    flexDirection: 'column',
+                    justifyContent: 'flex-start',
                     backgroundColor: 'teal',
                     width: displayWidth,
+                    marginBottom: 10,
                 }}>
 
 
                     <View
                         style={{
-                            flex: 1,
+                            // flex: 1,
+                            height: '100%',
                             flexDirection: 'row',
                             justifyContent: 'flex-start',
+                            width: displayWidth,
+                            backgroundColor: 'blue',
+
                         }}
                     >
 
 
-                        <View style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                        }}
-                        >
-
-                            {/*partner name and image starts here*/}
 
 
-                            <View
-                                style={{
-                                    flexDirection: 'column',
-                                    justifyContent: 'center',
-                                    // backgroundColor: 'orange',
-                                    paddingStart: 16,
-                                    width: displayWidth/6,
+                        {/*partner name and image starts here*/}
 
 
-                                }}
-                            >
-
-
-                                <TouchableOpacity
-                                    onPress={() =>
-
-                                        navigation.dispatch(CommonActions.goBack())
-
-                                    }
-                                    style={{
-                                        width: (displayWidth/6) -16,
-                                    }}
-                                >
-                                    <Ionicons
-                                        name='arrow-back-sharp'
-                                        size={40}
-                                        color='teal'
-                                    />
-                                </TouchableOpacity>
-                            </View>
-
-
-
-                            <View style={{
-
-                                width: '75%',
-                                flexDirection: 'row',
-                                justifyContent: 'flex-start',
-                                // backgroundColor: 'gold',
-                                paddingLeft: displayWidth/10,
+                        <View
+                            style={{
+                                flexDirection: 'column',
+                                justifyContent: 'center',
+                                backgroundColor: 'teal',
+                                paddingStart: 16,
+                                width: displayWidth/6,
 
 
                             }}
+                        >
+
+
+                            <TouchableOpacity
+                                onPress={() =>
+
+                                    navigation.dispatch(CommonActions.goBack())
+
+                                }
+                                style={{
+                                    width: (displayWidth/6) -16,
+                                }}
                             >
+                                <Ionicons
+                                    name='arrow-back-sharp'
+                                    size={40}
+                                    color='white'
+                                />
+                            </TouchableOpacity>
+                        </View>
 
 
 
+                        <View style={{
+
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            backgroundColor: 'teal',
+                            // paddingStart: 16,
+                            width: (displayWidth- (displayWidth/6)),
+
+
+                        }}
+                        >
 
 
 
-
-                            </View>
-
-
-                            {/*partner name and image starts here*/}
 
 
 
 
                         </View>
+
+                        {/*partner name and image starts here*/}
+
                     </View>
 
 
@@ -376,7 +285,210 @@ const Filter_People_Page: React.FC<Filter_People_Page_Props> = ({props, navigati
 
 
 
+
+
+
+
+
+
                 {/*0.8 teal colored header ends here...*/}
+
+
+                {/*Edit Filter portion begins here...*/}
+
+                <View style={{
+                    height: displayHeight/10,
+                    // backgroundColor: 'white',
+                    flexDirection: 'column',
+                    justifyContent: 'flex-start',
+                    backgroundColor: 'white',
+                    width: displayWidth,
+                    marginBottom: 10,
+                }}>
+
+
+                    <View
+                        style={{
+                            // flex: 1,
+                            height: '100%',
+                            flexDirection: 'row',
+                            justifyContent: 'flex-start',
+                            width: displayWidth,
+                            backgroundColor: 'white',
+
+                        }}
+                    >
+
+
+
+
+                        {/*partner name and image starts here*/}
+                        <View style={{
+
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            // backgroundColor: 'orange',
+                            backgroundColor: 'white',
+                            // paddingStart: 16,
+                            width: '55%',
+
+
+                        }}
+                        >
+                        </View>
+
+
+
+
+                        <View
+                            style={{
+                                flexDirection: 'column',
+                                justifyContent: 'center',
+                                // backgroundColor: 'red',
+                                // paddingStart: 16,
+                                width: '45%',
+                                alignItems: 'flex-start',
+                                alignSelf: 'center',
+                                alignContent: 'flex-start',
+
+
+                            }}
+                        >
+
+                            <TouchableOpacity
+                                onPress={() =>
+
+                                    navigation.dispatch(CommonActions.goBack())
+
+                                }
+                                style={{
+                                    // width: '45%',
+                                }}
+                            >
+                                <View style={{
+                                    flexDirection: 'row',
+                                    justifyContent: "flex-start",
+                                    alignItems: "center",
+                                }}
+                                >
+
+
+                                    <View style={{
+                                        flexDirection: 'column',
+                                        justifyContent: 'center',
+                                        width: '60%',
+                                    }}>
+
+                                        <Text style={{
+                                            fontSize: 16,
+                                            fontWeight: 'bold',
+                                            alignSelf: 'flex-start',
+                                            color: 'teal',
+                                        }}>
+                                            Edit Filter
+
+
+                                        </Text>
+
+                                    </View>
+
+                                    <View style={{
+                                        flexDirection: 'column',
+                                        justifyContent: 'center',
+                                        width: '30%',
+                                        // backgroundColor: 'tomato',
+                                    }}>
+
+                                        <MaterialCommunityIcons
+                                            name='tune'
+                                            size={40}
+                                            color='teal'
+                                        />
+
+                                    </View>
+
+                                </View>
+
+                            </TouchableOpacity>
+
+
+
+                        </View>
+
+
+
+
+                        {/*partner name and image starts here*/}
+
+                    </View>
+
+
+
+                </View>
+                {/*Edit FIlter portion ends here..*/}
+
+
+
+
+
+
+                {/*Search Portion begins here...*/}
+
+                <View style={{
+                    height: displayHeight/10,
+                    backgroundColor: 'red',
+                    flexDirection: 'column',
+                    justifyContent: 'flex-start',
+                    // backgroundColor: 'white',
+                    width: displayWidth,
+                    marginBottom: 10,
+                }}>
+
+
+                    <View
+                        style={{
+                            // flex: 1,
+                            height: '100%',
+                            flexDirection: 'row',
+                            justifyContent: 'flex-start',
+                            width: displayWidth,
+                            backgroundColor: 'white',
+
+                        }}
+                    >
+
+                        
+                        <Search_People
+
+                            filter_By_Text_InputState_1={search_State}
+                            setSearch_1={searchFilterFunction}
+                            clearSearch_1={clearSearch}
+                            deviceHeight_1={displayHeight}
+                            deviceWidth_1={displayWidth}
+                            ref={ref_User_Search}
+                        />
+
+
+
+
+
+                        {/*partner name and image starts here*/}
+
+                    </View>
+
+
+
+                </View>
+
+
+                {/*Search Portion ends her..*/}
+
+
+
+
+
+
+
 
 
                 <View style={{
@@ -393,198 +505,6 @@ const Filter_People_Page: React.FC<Filter_People_Page_Props> = ({props, navigati
                 >
 
 
-                    {/*Date Label begins here..*/}
-                    <View
-                        style={{
-
-
-                            // borderWidth: 1,
-                            width: '100%',
-
-                            flexDirection: 'column',
-                            alignItems: "flex-start",
-                            justifyContent: "flex-start",
-                            height: displayHeight / 16,
-
-                        }}
-                    >
-                        <View
-                            style={{
-                                paddingLeft: displayWidth/10,
-                            }}>
-
-                            <Text style={{
-                                color: 'teal',
-                                fontWeight: "bold",
-                                fontSize: 20,
-                            }}>Date</Text>
-
-
-                        </View>
-
-                        <View
-                            style={{
-                                width: '100%',
-                                flexDirection: 'row',
-                                alignItems: "center",
-                                justifyContent: "flex-start",
-                                paddingLeft: displayWidth/10,
-                            }}
-                        >
-                            <Text style={{color: 'grey'}}> ──────────────────────────</Text>
-                        </View>
-
-                    </View>
-
-
-                    <StartDate
-                        totalHeight={displayHeight}
-                        totalWidth={displayWidth}
-                        startDateValueState2={start_Date_Value_State}
-                        showStartState2={show_Start_State}
-                        showDatepickerStart2={show_Datepicker_Start}
-                    />
-                    <EndDate
-                        totalHeight={displayHeight}
-                        totalWidth={displayWidth}
-                        endDateValueState2={end_Date_Value_State}
-                        showEndState2={show_End_State}
-                        showDatepickerEndDate2={show_Datepicker_End_Date}
-                    />
-
-                    <View
-                        style={{
-                            width: '100%',
-                            flexDirection: 'column',
-                            alignItems: "flex-start",
-                            justifyContent: "flex-start",
-                            height: displayHeight / 16,
-
-                        }}
-                    >
-                        <View
-                            style={{
-                                paddingLeft: displayWidth/10,
-                            }}>
-
-                            <Text style={{
-                                color: 'teal',
-                                fontWeight: "bold",
-                                fontSize: 20,
-                            }}>Status</Text>
-
-
-                        </View>
-
-                        <View
-                            style={{
-                                width: '100%',
-                                flexDirection: 'row',
-                                alignItems: "center",
-                                justifyContent: "flex-start",
-                                paddingLeft: displayWidth/10,
-                            }}
-                        >
-                            <Text style={{color: 'grey'}}> ──────────────────────────</Text>
-                        </View>
-
-                    </View>
-
-                    {/*Status Label ends here...*/}
-
-
-                    {/*CheckBOx Flat LIst begins here...*/}
-                    <View
-                        style={{
-
-                            // borderBottomColor: 'deepskyblue',
-                            // borderWidth: 1,
-                            width: '100%',
-
-                            flexDirection: 'column',
-                            alignItems: "flex-start",
-                            justifyContent: "flex-start",
-                            // backgroundColor: 'deepskyblue',
-                            paddingLeft: displayWidth/10,
-
-                            // height: displayHeight / 16,
-
-                        }}
-                    >
-                        <FlatList
-                            data={all_Activity_Status_of_Users_State}
-                            renderItem={({item, index}) => (
-                                <CheckBoxComponent
-                                    size= {25}
-                                    keyValue= {2}
-                                    selectedArrayObject= {update_CheckBox_}
-                                    checked= {item.isSelected}
-                                    color= "teal"
-                                    labelColor= "grey"
-                                    label= {item.status}
-                                    // label2= {item.partner_Or_Group_Type}
-                                    value= {item.status}
-                                    index= {index}
-                                />
-                            )}
-
-
-                            keyExtractor= {(item, index) => `${item.status}${item.index}`}
-
-                            numColumns={1}
-
-                            extraData={all_Activity_Status_of_Users_State}
-                        />
-                    </View>
-
-                    {/*CheckBOx Flat LIst ends here...*/}
-
-
-
-                    {/*Generate Button begins here...*/}
-
-
-
-                    <View style={{
-                        flexDirection: 'column',
-                        flex: 1.3,
-                    }}
-                    >
-
-                        <TouchableOpacity
-
-                            style={
-
-                                {
-                                    height: 45,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    marginBottom: 20,
-                                    width: displayWidth/2,
-                                    borderRadius: 9,
-                                    alignContent: "center",
-                                    alignSelf: "center",
-                                    backgroundColor: ((end_Date_Value_State === null) &&(start_Date_Value_State === null)) ? 'teal':'black',
-                                }}
-                            onPress={generate_Button_handler}
-                            // disabled={buttonDisabledState}
-
-                            disabled={((end_Date_Value_State === null) &&(start_Date_Value_State === null))}
-
-                        >
-
-
-                            <Text style={{
-
-                                color: 'white',
-                                textAlign: 'center',
-                                alignSelf: 'stretch',
-                                fontSize: 16,
-                            }}>
-                                {((end_Date_Value_State === null) &&(start_Date_Value_State === null))? 'Generate' :'Generated'}
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
 
 
 

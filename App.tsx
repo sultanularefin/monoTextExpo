@@ -13,12 +13,20 @@ export default function App() {
   if (!isLoadingComplete) {
     return null;
   } else {
+
+    const STYLES = ['default', 'dark-content', 'light-content'];
     return (
         <Provider store={store}>
-      <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme} />
-        <StatusBar />
-      </SafeAreaProvider>
+          <SafeAreaProvider>
+            <Navigation colorScheme={colorScheme} />
+            <StatusBar />
+
+            {/*<StatusBar
+                animated={true}
+                backgroundColor="#61dafb"
+                hidden={false}
+            />*/}
+          </SafeAreaProvider>
         </Provider>
     );
   }
