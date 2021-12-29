@@ -11,8 +11,8 @@ import {
 import DateTimePicker from '@react-native-community/datetimepicker';
 import EditScreenInfo from '../components/EditScreenInfo';
 
-import { Ionicons } from '@expo/vector-icons';
-// import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons,Feather } from '@expo/vector-icons';
+
 
 import {
     Text,

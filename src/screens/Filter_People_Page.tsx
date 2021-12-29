@@ -27,6 +27,7 @@ import CheckBoxComponent from "./userAnalyzerComponents_Android/CheckBoxComponen
 import {useAppDispatch} from "../appStore/app/hooks";
 import {CommonActions} from "@react-navigation/native";
 import Search_People from "./filter_People_Components/Search_People";
+import User_Items from "./filter_People_Components/User_Items";
 
 
 const calendarImage = require('../../assets/images/date_icon.png');
@@ -47,7 +48,27 @@ export interface one_User_Activity_Status_interface{
     status: string,
     // geolocation_Lat_Long: typeof location,
     isSelected: boolean,
+}
 
+export interface OneUser_From_Asset_Interface{
+
+    date: Date,
+    id:string,
+    itemData:{
+        amountNumber: Number,
+        categoryText: string,
+        detailText: string,
+        imageURL: string, // string[]
+        nameText: string,
+        nameTextHalfWidth: string,
+        tagText: string,
+        urlText: string,
+        priceText:Number,
+        haveItCondition: Boolean,
+    },
+    uploadedBy: string,
+    user: string,
+    itemId: number//number[],
 }
 
 
@@ -58,7 +79,27 @@ export interface checkBox_update_for_forward__Chat {
 }
 
 
+const convert_string_date_to_UTC_date_TripzSlice= (stringDate:string) => {
 
+    // const parts2 ='2021-12-01 11:33:19'.split('-');
+    const parts2 = stringDate.split('-');
+    const parts3 = parts2[2].split(':');
+    const parts4 = parts3[0].split(' ')[1];
+
+    const year= parseInt(parts2[0],10);
+    const month = parseInt(parts2[1],10)-1;// parseInt(parts2[1],10) - 1;
+    const day = parseInt(parts3[0],10);
+    const hour = parseInt(parts4,10);
+    const minute = parseInt(parts3[1],10);
+    const second = parseInt(parts3[2],10);
+
+
+
+    const  mydate2 = new Date(Date.UTC(year,month ,day ,hour,minute,second));
+
+
+    return mydate2;
+};
 
 const Filter_People_Page: React.FC<Filter_People_Page_Props> = ({props, navigation,}) => {
 
@@ -85,6 +126,102 @@ const Filter_People_Page: React.FC<Filter_People_Page_Props> = ({props, navigati
 
 
     const dispatch = useAppDispatch();
+
+
+    const [filtered_Items_State,setFiltered_Items_State]
+        = useState<OneUser_From_Asset_Interface[]|[]>(
+
+
+
+
+
+        [
+            {
+                date: convert_string_date_to_UTC_date_TripzSlice('2021-12-01 11:33:19'),
+                id:'111',
+                itemData:{
+                    amountNumber: 111,
+                    categoryText: "cloth",
+                    detailText: "shirt",
+                    imageURL: "",
+                    nameText: "new denim shirt",
+                    nameTextHalfWidth: "new denim shirt",
+                    tagText: "shirt",
+                    urlText: "",
+                    priceText:22,
+                    haveItCondition: true,
+                },
+                uploadedBy: "Arefin",
+                user: "Arefin",
+                itemId:111,
+            },
+            {
+                date: convert_string_date_to_UTC_date_TripzSlice('2021-12-01 11:33:19'),
+                id:'222',
+                itemData:{
+                    amountNumber: 222,
+                    categoryText: "cloth",
+                    detailText: "shirt",
+                    imageURL: "",
+                    nameText: "denim new shirt",
+                    nameTextHalfWidth: "denim new shirt",
+                    tagText: "shirt",
+                    urlText: "",
+                    priceText:33,
+                    haveItCondition: true,
+                },
+                uploadedBy: "Arefin",
+                user: "Arefin",
+                itemId:222,
+            },
+            {
+                date: convert_string_date_to_UTC_date_TripzSlice('2021-12-01 11:33:19'),
+                id:'333',
+                itemData:{
+                    amountNumber: 888,
+                    categoryText: "cloth",
+                    detailText: "shirt",
+                    imageURL: "",
+                    nameText: "denim shirt new",
+                    nameTextHalfWidth: "denim shirt new",
+                    tagText: "shirt",
+                    urlText: "",
+                    priceText:77,
+                    haveItCondition: true,
+                },
+                uploadedBy: "Arefin",
+                user: "Arefin",
+                itemId:333,
+            },
+            {
+                date: convert_string_date_to_UTC_date_TripzSlice('2021-12-01 11:33:19'),
+                id:'444',
+                itemData:{
+                    amountNumber: 111,
+                    categoryText: "cloth",
+                    detailText: "shirt",
+                    imageURL: "",
+                    nameText: "shirt new denim",
+                    nameTextHalfWidth: "shirt new denim",
+                    tagText: "shirt",
+                    urlText: "",
+                    priceText:414,
+                    haveItCondition: true,
+                },
+                uploadedBy: "Arefin",
+                user: "Arefin",
+                itemId:427,
+            },
+        ]
+
+
+
+
+
+    ); //WILL BE LOADED FROM REDUX, ONCE SUCCESSFULLY LOGGED IN.
+
+
+
 
     const [all_Activity_Status_of_Users_State, setAll_Activity_Status_of_Users_State]
         = useState<one_User_Activity_Status_interface[]|[]>(
@@ -457,7 +594,7 @@ const Filter_People_Page: React.FC<Filter_People_Page_Props> = ({props, navigati
                         }}
                     >
 
-                        
+
                         <Search_People
 
                             filter_By_Text_InputState_1={search_State}
@@ -477,6 +614,8 @@ const Filter_People_Page: React.FC<Filter_People_Page_Props> = ({props, navigati
                     </View>
 
 
+                    {/*Users_FRom__Asset_Items_Begins__Here:*/}
+
 
                 </View>
 
@@ -487,25 +626,43 @@ const Filter_People_Page: React.FC<Filter_People_Page_Props> = ({props, navigati
 
 
 
-
-
-
-
                 <View style={{
                     flex: 6,
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    width: '95%',
+                    // width: '95%',
                     borderRadius: 1,
-                    borderWidth: 2,
-                    borderColor: 'teal',
+                    // borderWidth: 2,
+                    // borderColor: 'teal',
+
                 }}
 
                 >
 
 
 
+                    <FlatList
+                        data={filtered_Items_State}
+                        numColumns={2}
+                        // renderItem= {renderItemAlphabets}
+
+
+                        renderItem={({item, index}) => (
+                            /*<Text>{item.itemData.nameText}</Text>*/
+                            <User_Items
+
+                                currentIndex={index}
+                                key={index.toString()}
+                                property = {item}
+
+                            />
+                        )}
+                        // keyExtractor={(index) => index.toString()}
+                        keyExtractor={(item:OneUser_From_Asset_Interface, index00:number) => `${index00}+${item.itemData.nameText}`}
+                        showsHorizontalScrollIndicator={false}
+                        // horizontal={true}
+                    />
 
 
 
