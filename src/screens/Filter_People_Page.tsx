@@ -31,6 +31,26 @@ import User_Items from "./filter_People_Components/User_Items";
 
 
 const calendarImage = require('../../assets/images/date_icon.png');
+import {UserActivity} from "../customInterfaces/UserActivity";
+
+
+import {UserData2} from "../dataIMP/UserData2";
+import Header_With_Back_Handler_FilterPage from "./filter_People_Components/Header_With_Back_Handler_FilterPage";
+import Edit_Filter_Navigation_component_in_Filter_Page
+    from "./filter_People_Components/Edit_Filter_Navigation_component_in_Filter_Page";
+
+/*
+
+    dateToDayId: {
+        string: number;
+    };
+
+dateToDayId: number;
+ */
+
+
+// @ts-ignore
+const tempAllOptionsState:UserActivity = UserData2;
 
 export interface Filter_People_Page_Props {
 
@@ -108,6 +128,10 @@ const Filter_People_Page: React.FC<Filter_People_Page_Props> = ({props, navigati
     const [modeStateStartTime, setModeStateStartTime] = useState('date');
 
     const [show_Start_State, setShowStartState] = useState<boolean>(false);
+
+    const [user_Data_State,setUser_Data_State] =useState<UserActivity>(tempAllOptionsState);
+
+    // const tempAllOptionsState:UserActivity = UserData2;
 
 
 
@@ -295,9 +319,23 @@ const Filter_People_Page: React.FC<Filter_People_Page_Props> = ({props, navigati
 
 
 
+    // user_Data_State
 
 
+    console.log("earliestDate::",user_Data_State.earliestDate);
+    console.log("user_Data_State.profile.name::",user_Data_State.profile.name);
+    console.log("user_Data_State.profile.pictureUrl::",user_Data_State.profile.pictureUrl);
 
+    /*
+    console.log("earliestDate::",user_Data_State.earliestDate);
+    console.log("earliestDate::",user_Data_State.earliestDate);
+    console.log("earliestDate::",user_Data_State.earliestDate);
+    console.log("earliestDate::",user_Data_State.earliestDate);
+    console.log("earliestDate::",user_Data_State.earliestDate);
+    console.log("earliestDate::",user_Data_State.earliestDate);
+    console.log("earliestDate::",user_Data_State.earliestDate);
+    console.log("earliestDate::",user_Data_State.earliestDate);
+    */
 
     return (
 
@@ -328,101 +366,11 @@ const Filter_People_Page: React.FC<Filter_People_Page_Props> = ({props, navigati
                 >
                 </View>
 
-                {/*Teal begins here.. 2nd iteration*/}
-                <View style={{
-                    height: displayHeight/10,
-                    // backgroundColor: 'white',
-                    flexDirection: 'column',
-                    justifyContent: 'flex-start',
-                    backgroundColor: 'teal',
-                    width: displayWidth,
-                    marginBottom: 10,
-                }}>
 
-
-                    <View
-                        style={{
-                            // flex: 1,
-                            height: '100%',
-                            flexDirection: 'row',
-                            justifyContent: 'flex-start',
-                            width: displayWidth,
-                            backgroundColor: 'blue',
-
-                        }}
-                    >
-
-
-
-
-                        {/*partner name and image starts here*/}
-
-
-                        <View
-                            style={{
-                                flexDirection: 'column',
-                                justifyContent: 'center',
-                                backgroundColor: 'teal',
-                                paddingStart: 16,
-                                width: displayWidth/6,
-
-
-                            }}
-                        >
-
-
-                            <TouchableOpacity
-                                onPress={() =>
-
-                                    navigation.dispatch(CommonActions.goBack())
-
-                                }
-                                style={{
-                                    width: (displayWidth/6) -16,
-                                }}
-                            >
-                                <Ionicons
-                                    name='arrow-back-sharp'
-                                    size={40}
-                                    color='white'
-                                />
-                            </TouchableOpacity>
-                        </View>
-
-
-
-                        <View style={{
-
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            backgroundColor: 'teal',
-                            // paddingStart: 16,
-                            width: (displayWidth- (displayWidth/6)),
-
-
-                        }}
-                        >
-
-
-
-
-
-
-
-                        </View>
-
-                        {/*partner name and image starts here*/}
-
-                    </View>
-
-
-
-                </View>
-
-
-
-
-
+                <Header_With_Back_Handler_FilterPage
+                    displayHeight={displayHeight}
+                    displayWidth={displayWidth}
+                    navigation={navigation} />
 
 
 
@@ -433,135 +381,12 @@ const Filter_People_Page: React.FC<Filter_People_Page_Props> = ({props, navigati
 
                 {/*Edit Filter portion begins here...*/}
 
-                <View style={{
-                    height: displayHeight/10,
-                    // backgroundColor: 'white',
-                    flexDirection: 'column',
-                    justifyContent: 'flex-start',
-                    backgroundColor: 'white',
-                    width: displayWidth,
-                    marginBottom: 10,
-                }}>
+                <Edit_Filter_Navigation_component_in_Filter_Page
+                    displayHeight={displayHeight}
+                    displayWidth={displayWidth}
+                    navigation={navigation}
+                    />
 
-
-                    <View
-                        style={{
-                            // flex: 1,
-                            height: '100%',
-                            flexDirection: 'row',
-                            justifyContent: 'flex-start',
-                            width: displayWidth,
-                            backgroundColor: 'white',
-
-                        }}
-                    >
-
-
-
-
-                        {/*partner name and image starts here*/}
-                        <View style={{
-
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            // backgroundColor: 'orange',
-                            backgroundColor: 'white',
-                            // paddingStart: 16,
-                            width: '55%',
-
-
-                        }}
-                        >
-                        </View>
-
-
-
-
-                        <View
-                            style={{
-                                flexDirection: 'column',
-                                justifyContent: 'center',
-                                // backgroundColor: 'red',
-                                // paddingStart: 16,
-                                width: '45%',
-                                alignItems: 'flex-start',
-                                alignSelf: 'center',
-                                alignContent: 'flex-start',
-
-
-                            }}
-                        >
-
-                            <TouchableOpacity
-                                onPress={() =>
-
-                                    navigation.dispatch(CommonActions.goBack())
-
-                                }
-                                style={{
-                                    // width: '45%',
-                                }}
-                            >
-                                <View style={{
-                                    flexDirection: 'row',
-                                    justifyContent: "flex-start",
-                                    alignItems: "center",
-                                }}
-                                >
-
-
-                                    <View style={{
-                                        flexDirection: 'column',
-                                        justifyContent: 'center',
-                                        width: '60%',
-                                    }}>
-
-                                        <Text style={{
-                                            fontSize: 16,
-                                            fontWeight: 'bold',
-                                            alignSelf: 'flex-start',
-                                            color: 'teal',
-                                        }}>
-                                            Edit Filter
-
-
-                                        </Text>
-
-                                    </View>
-
-                                    <View style={{
-                                        flexDirection: 'column',
-                                        justifyContent: 'center',
-                                        width: '30%',
-                                        // backgroundColor: 'tomato',
-                                    }}>
-
-                                        <MaterialCommunityIcons
-                                            name='tune'
-                                            size={40}
-                                            color='teal'
-                                        />
-
-                                    </View>
-
-                                </View>
-
-                            </TouchableOpacity>
-
-
-
-                        </View>
-
-
-
-
-                        {/*partner name and image starts here*/}
-
-                    </View>
-
-
-
-                </View>
                 {/*Edit FIlter portion ends here..*/}
 
 
@@ -576,7 +401,6 @@ const Filter_People_Page: React.FC<Filter_People_Page_Props> = ({props, navigati
                     backgroundColor: 'red',
                     flexDirection: 'column',
                     justifyContent: 'flex-start',
-                    // backgroundColor: 'white',
                     width: displayWidth,
                     marginBottom: 10,
                 }}>

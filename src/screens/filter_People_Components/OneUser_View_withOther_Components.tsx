@@ -59,7 +59,7 @@ const OneUser_View_withOther_Components: React.FC<OneUser_View_withOther_Compone
     let dateWithMoment = moment(props.property2.date).format('ll');
 
 
-    console.log("props:__OneUser_View_withOther_Components___ ",props);
+    //console.log("props:__OneUser_View_withOther_Components___ ",props);
 
 
     return (
@@ -71,7 +71,7 @@ const OneUser_View_withOther_Components: React.FC<OneUser_View_withOther_Compone
                     width: (deviceWidth/2)-15,
                     height: deviceHeight/4,
                     flexDirection: 'column',
-                    justifyContent: 'flex-end',
+                    justifyContent: 'space-between',
 
 
 
@@ -83,6 +83,50 @@ const OneUser_View_withOther_Components: React.FC<OneUser_View_withOther_Compone
                 source={{uri: props.ImageResource}}
                 // source={{uri: "https://cdn.zmescience.com/wp-content/uploads/2015/01/Bright-ideas-The-evolution-of-natural-colours.jpg"}}
             >
+
+
+                <View style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    alignSelf: 'flex-end',
+                    alignContent: 'flex-end',
+                    justifyContent: 'center',
+                    width: 40,
+                    height: 40,
+                    backgroundColor: '#FFFFFF',
+                    opacity: 0.6,
+
+                }}>
+
+                    <TouchableOpacity
+                        onPress= {()=> {
+                            console.log("RPG");
+
+                        }}
+                    >
+                        <View style={{
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginRight: 5,
+                            paddingBottom: 1
+                        }}>
+                            <Feather
+                                name='x-circle'
+                                size={25}
+                                style={{
+                                    // color: 'black',
+                                    top: '.8%',
+                                    color: 'red',
+
+                                }}
+                            />
+                        </View>
+
+                    </TouchableOpacity>
+
+                </View>
+
                 <View style={{
                     flexDirection: 'column',
                     width: '100%',
@@ -90,6 +134,9 @@ const OneUser_View_withOther_Components: React.FC<OneUser_View_withOther_Compone
                     backgroundColor: '#FFFFFF',
                     opacity: 0.6,
                 }}>
+
+
+
                     <ScrollView
                         horizontal={true}
                     >
@@ -112,42 +159,10 @@ const OneUser_View_withOther_Components: React.FC<OneUser_View_withOther_Compone
 
                     {/* horizontal row view */}
                     <View style={{
-                        flexDirection: 'row-reverse',
+                        flexDirection: 'row',
                     }}>
 
-                        <TouchableOpacity style={{
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
 
-
-                        }}
-
-                                          onPress={() => {
-                                              console.log("itemToBeDeletedLocal");
-
-                                          }
-                                          }
-                        >
-
-                            <View style={{
-                                flexDirection: 'column',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                marginRight: 5,
-                                paddingBottom: 1
-
-                            }}>
-                                <Feather
-                                    name='trash-2'
-                                    // name='ios-trash-outline'
-                                    size={25}
-                                    style={{color: '#000000', top: '.8%'}}
-
-                                />
-                            </View>
-
-                        </TouchableOpacity>
 
                         <View style={{
                             flexDirection: 'column',

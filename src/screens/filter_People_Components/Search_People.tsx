@@ -3,12 +3,18 @@
 import {StyleSheet, TextInput, TouchableOpacity, View} from "react-native";
 
 
+// import {CoutriesWithPhoneFlag} from "./CoutriesWithPhoneFlag";
+// const tempAllOptionsState:combinedInterface[] = CoutriesWithPhoneFlag;
+
+
+
+
+
 import {Ionicons, Octicons,MaterialCommunityIcons,Entypo} from '@expo/vector-icons';
 
 import React, {
     forwardRef
 } from 'react';
-
 
 export interface Search_People_Props{
 

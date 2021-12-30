@@ -25,6 +25,7 @@ import EndDate from "./userAnalyzerComponents_Android/EndDate";
 import CheckBoxComponent from "./userAnalyzerComponents_Android/CheckBoxComponent";
 import {useAppDispatch} from "../appStore/app/hooks";
 import {CommonActions} from "@react-navigation/native";
+import UserAnalyzer_Page from "./UserAnalyzer_Page";
 
 
 const calendarImage = require('../../assets/images/date_icon.png');
@@ -359,11 +360,8 @@ const EditUserAnalyzer_Page: React.FC<EditUserAnalyzer_Page_Props> = ({props, na
 
 
                                 <TouchableOpacity
-                                    onPress={() =>
-
-                                        navigation.dispatch(CommonActions.goBack())
-
-                                    }
+                                    // onPress={() => navigation.dispatch(CommonActions.goBack())}
+                                    onPress={() => navigation.navigate("UserAnalyzer_Page")}
                                     style={{
                                         width: (displayWidth/6) -16,
                                     }}
