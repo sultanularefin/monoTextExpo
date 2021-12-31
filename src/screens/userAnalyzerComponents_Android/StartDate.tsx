@@ -9,6 +9,8 @@ export interface StartDate_Props {
     startDateValueState2:null | Date,
     showStartState2:boolean,
     showDatepickerStart2:()=>void,
+    onChangeStartDate2:()=>void,
+    modeStateStartTime2:string,
 }
 
 const StartDate: React.FC<StartDate_Props> = ({
@@ -17,6 +19,9 @@ const StartDate: React.FC<StartDate_Props> = ({
                                                   startDateValueState2,
                                                   showStartState2,
                                                   showDatepickerStart2,
+                                                  onChangeStartDate2,
+                                                  modeStateStartTime2
+
 
                                               }) => {
 
@@ -64,7 +69,8 @@ const StartDate: React.FC<StartDate_Props> = ({
                 <View style={{
                     flexDirection: 'row',
                     flex: 3,
-                    justifyContent: "flex-start"
+                    justifyContent: "flex-start",
+                    // backgroundColor: "tomato",
                 }}>
                     <View style={{
 
@@ -72,6 +78,7 @@ const StartDate: React.FC<StartDate_Props> = ({
                         flexDirection: 'column',
                         alignItems: 'center',
                         justifyContent: 'center',
+                        backgroundColor: "tomato",
                     }}
                     >
                         <Image
@@ -87,10 +94,11 @@ const StartDate: React.FC<StartDate_Props> = ({
                     </View>
                     <View style={{
 
-                        paddingLeft: totalWidth/3,
+                        paddingLeft: 10,
                         flexDirection: 'column',
                         alignItems: 'center',
                         justifyContent: 'center',
+                        backgroundColor: "gold",
                     }}
                     >
                         <Text style={{
@@ -101,7 +109,8 @@ const StartDate: React.FC<StartDate_Props> = ({
                             {
                                 (startDateValueState2 === null)
                                     ? 'Start date'
-                                    :startDateValueState2.toDateString()
+                                    :startDateValueState2.toDateString() // 1 July 2021
+                                    // :startDateValueState2
                             }
                         </Text>
                     </View>
@@ -118,9 +127,9 @@ const StartDate: React.FC<StartDate_Props> = ({
                         testID="dateTimePickerStartDate"
                         timeZoneOffsetInMinutes={0}
                         // @ts-ignore
-                        is24Hour={true}
+                        // is24Hour={true}
                         // @ts-ignore
-                        onChange={onChangeStartDate}
+                        onChange={onChangeStartDate2}
                         // neutralButtonLabel='clear'
 
                         neutralButtonLabel='cancel'
@@ -131,7 +140,7 @@ const StartDate: React.FC<StartDate_Props> = ({
 
                         }
                         // @ts-ignore
-                        mode={modeStateStartTime}
+                        mode={modeStateStartTime2}
 
                         display= {(Platform.OS==="android")
                             ?"default"

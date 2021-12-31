@@ -44,17 +44,10 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
     return (
-        <Stack.Navigator initialRouteName={"Filter_People_Page"}>
+        <Stack.Navigator initialRouteName={"UserAnalyzer_Page"}>
 
 
             <Stack.Group screenOptions={{ presentation: 'modal' }}>
-                <Stack.Screen
-                    name="EditUserAnalyzer_Page"
-                    component={EditUserAnalyzer_Page}
-                    options={{
-                        headerShown: false,
-                    }}
-                />
                 <Stack.Screen
                     name="UserAnalyzer_Page"
                     component={UserAnalyzer_Page}
@@ -62,6 +55,16 @@ function RootNavigator() {
                         headerShown: false,
                     }}
                 />
+
+
+                <Stack.Screen
+                    name="EditUserAnalyzer_Page"
+                    component={EditUserAnalyzer_Page}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+
                 <Stack.Screen
                     name="Filter_People_Page"
                     component={Filter_People_Page}

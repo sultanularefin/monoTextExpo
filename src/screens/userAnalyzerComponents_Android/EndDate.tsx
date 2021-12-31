@@ -1,6 +1,7 @@
 import {Text, View} from "../../components/Themed";
 import {Image, Platform, TouchableOpacity} from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
+// import DateTimePicker from "@react-native-community/datetimepicker";
 
 const calendarImage = require('../../../assets/images/date_icon.png');
 export interface EndDate_Props {
@@ -9,6 +10,8 @@ export interface EndDate_Props {
     endDateValueState2:null | Date,
     showEndState2:boolean,
     showDatepickerEndDate2:()=>void,
+    onChangeEndDate2:()=>void,
+    modeStateEndTime2:string,
 }
 
 const EndDate: React.FC<EndDate_Props> = ({
@@ -17,15 +20,14 @@ const EndDate: React.FC<EndDate_Props> = ({
                                               endDateValueState2,
                                               showEndState2,
                                               showDatepickerEndDate2,
-
+                                              onChangeEndDate2,
+                                              modeStateEndTime2,
                                           }) => {
 
     return(
 
         <View style={{
-
-       flexDirection: 'row',
-
+            flexDirection: 'row',
             width: '95%',
             marginBottom: 20,
             alignItems: 'center',
@@ -35,7 +37,7 @@ const EndDate: React.FC<EndDate_Props> = ({
 
             <View
                 style={{
-                 width: '24%',
+                    width: '24%',
                     flexDirection: 'row',
                     alignItems: "center",
                     justifyContent: "flex-start",
@@ -53,8 +55,8 @@ const EndDate: React.FC<EndDate_Props> = ({
 
                 onPress={showDatepickerEndDate2}
                 style={{
-                  height: 40,
-                width: '72%',
+                    height: 40,
+                    width: '72%',
                     borderColor: 'teal',
                     borderWidth: 1,
                     backgroundColor: 'white',
@@ -87,10 +89,16 @@ const EndDate: React.FC<EndDate_Props> = ({
                     </View>
                     <View style={{
 
-                        paddingLeft: totalWidth/3,
+                        // paddingLeft: totalWidth/3,
+                        // flexDirection: 'column',
+                        // alignItems: 'center',
+                        // justifyContent: 'center',
+
+                        paddingLeft: 10,
                         flexDirection: 'column',
                         alignItems: 'center',
                         justifyContent: 'center',
+                        backgroundColor: "gold",
                     }}
                     >
                         <Text style={{
@@ -112,9 +120,9 @@ const EndDate: React.FC<EndDate_Props> = ({
                         testID="dateTimePicker"
                         timeZoneOffsetInMinutes={0}
                         // @ts-ignore
-                        is24Hour={true}
+                        // is24Hour={true}
                         // @ts-ignore
-                        onChange={onChangeEndDate}
+                        onChange={onChangeEndDate2}
                         // neutralButtonLabel='clear'
 
                         neutralButtonLabel='cancel'
@@ -132,7 +140,7 @@ const EndDate: React.FC<EndDate_Props> = ({
 
 
                         // @ts-ignore
-                        mode={modeStateEndTime}
+                        mode={modeStateEndTime2}
 
                         display= {(Platform.OS==="android")
                             ?"default"

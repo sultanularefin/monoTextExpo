@@ -25,6 +25,10 @@ import EndDate from "./userAnalyzerComponents_Android/EndDate";
 import CheckBoxComponent from "./userAnalyzerComponents_Android/CheckBoxComponent";
 import {useAppDispatch} from "../appStore/app/hooks";
 import {CommonActions} from "@react-navigation/native";
+import {
+    filter_Users_By_updated_2_date_intervals_1,
+    user_Filter_Payload_Interface
+} from "../appStore/Reducers/UserAnalyzerSlice";
 
 
 const calendarImage = require('../../assets/images/date_icon.png');
@@ -79,7 +83,6 @@ const UserAnalyzer_Page: React.FC<UserAnalyzer_Page_Props> = ({props, navigation
     // const [multipleImageState, setMultipleImageState] = useState <iImageCorpPicker[] | []>([]);
     const [end_Date_Value_State, setEndtDateValueState] = useState<null | Date>(null);
     //useState(new Date());
-
 
 
 
@@ -230,6 +233,48 @@ const UserAnalyzer_Page: React.FC<UserAnalyzer_Page_Props> = ({props, navigation
         //     (oneBYOne: forward_From_GroupChat_Interface) =>
         //         oneBYOne.isSelected_For_Forward
         // );
+
+
+        // console.log("start_Date_Value_State: ", start_Date_Value_State);
+        // console.log("end_Date_Value_State: ", end_Date_Value_State);
+        // console.log("start_Date_Value_State?.toLocaleDateString('en-BD'): ", start_Date_Value_State?.toLocaleDateString('en-BD'));
+        // console.log("end_Date_Value_State?.toLocaleDateString('en-BD'): ", end_Date_Value_State?.toLocaleDateString('en-BD'));
+
+        const startDate=  start_Date_Value_State?.toLocaleDateString('en-BD');
+
+        const endDate = end_Date_Value_State?.toLocaleDateString('en-BD');
+        // console.log("end_Date_Value_State?.toLocaleDateString('en-BD'): ", );
+
+        // start_Date_Value_State?.toLocaleDateString('en-BD'):  12/15/21
+        // end_Date_Value_State?.toLocaleDateString('en-BD'):  01/04/22
+
+        // console.log("before invoking dispatch 111");
+
+        // console.log("all_Activity_Status_of_Users_State: ",all_Activity_Status_of_Users_State);
+
+        if((startDate) && (endDate)){
+
+            const payLoad:user_Filter_Payload_Interface={
+
+                startDate:startDate,
+                endDate: endDate,
+                userCategory: all_Activity_Status_of_Users_State,
+            };
+
+            console.log("before invoking dispatch222");
+
+            dispatch(filter_Users_By_updated_2_date_intervals_1(payLoad));
+        }
+        else{
+
+            console.log("at else");
+        }
+
+        // 999
+
+        // start_Date_Value_State
+        // end_Date_Value_State
+        // all_Activity_Status_of_Users_State
     }
 
 
@@ -326,24 +371,6 @@ const UserAnalyzer_Page: React.FC<UserAnalyzer_Page_Props> = ({props, navigation
 
                                     }}
                                 >
-
-
-                                    {/* <TouchableOpacity
-                                    onPress={() =>
-
-                                        navigation.dispatch(CommonActions.goBack())
-
-                                    }
-                                    style={{
-                                        width: (displayWidth/6) -16,
-                                    }}
-                                >
-                                    <Ionicons
-                                        name='arrow-back'
-                                        size={30}
-                                        color='black'
-                                    />
-                                </TouchableOpacity>*/}
                                 </View>
 
                                 {/*partner name and image starts here*/}
@@ -365,27 +392,7 @@ const UserAnalyzer_Page: React.FC<UserAnalyzer_Page_Props> = ({props, navigation
                                         justifyContent: 'center',
                                         width: displayWidth/6.5,
                                     }}>
-                                        {/*<TouchableOpacity
-                                        onPress={() =>{
-                                            console.log("RPG");
-                                        }}
-                                    >
-                                        <Image
-                                            source={{
-                                                uri: "https://static.toiimg.com/thumb/msid-70303061,width-800,height-600,resizemode-75,imgsize-194293,pt-32,y_pad-40/70303061.jpg",
-                                            }}
-                                            style={{
-                                                width: displayHeight/ 16,
-                                                height: displayHeight/16,
-                                                justifyContent: 'center',
-                                                borderRadius: (displayHeight/16) / 2,
-                                                borderColor: 'grey',
-                                                borderWidth: 1,
 
-
-                                            }}
-                                        />
-                                    </TouchableOpacity>*/}
                                     </View>
 
 
@@ -393,26 +400,7 @@ const UserAnalyzer_Page: React.FC<UserAnalyzer_Page_Props> = ({props, navigation
                                         flexDirection: 'column',
                                         justifyContent: 'center',
                                     }}>
-                                        {/*   <TouchableOpacity
-                                        onPress={() =>{
-                                            console.log("RPG__2");
-                                        }}
 
-
-
-
-                                    >
-                                        <Text style={{
-                                            fontSize: 20,
-                                            fontWeight: 'bold',
-                                            alignSelf: 'center',
-                                            color: 'black',
-                                        }}>
-                                            sos
-
-
-                                        </Text>
-                                    </TouchableOpacity>*/}
                                     </View>
 
 
@@ -550,6 +538,9 @@ const UserAnalyzer_Page: React.FC<UserAnalyzer_Page_Props> = ({props, navigation
                         startDateValueState2={start_Date_Value_State}
                         showStartState2={show_Start_State}
                         showDatepickerStart2={show_Datepicker_Start}
+                        //@ts-ignore
+                        onChangeStartDate2={onChangeStartDate}
+                        modeStateStartTime2={modeStateStartTime}
                     />
 
                     {/*start date ends here*/}
@@ -563,6 +554,9 @@ const UserAnalyzer_Page: React.FC<UserAnalyzer_Page_Props> = ({props, navigation
                         endDateValueState2={end_Date_Value_State}
                         showEndState2={show_End_State}
                         showDatepickerEndDate2={show_Datepicker_End_Date}
+                        //@ts-ignore
+                        onChangeEndDate2={onChangeEndDate}
+                        modeStateEndTime2={modeStateEndTime}
                     />
 
                     {/*end date ends here*/}
@@ -706,7 +700,7 @@ const UserAnalyzer_Page: React.FC<UserAnalyzer_Page_Props> = ({props, navigation
                             onPress={generate_Button_handler}
                             // disabled={buttonDisabledState}
 
-                            disabled={((end_Date_Value_State === null) &&(start_Date_Value_State === null))}
+                            // disabled={((end_Date_Value_State === null) &&(start_Date_Value_State === null))}
 
                         >
 
@@ -718,7 +712,8 @@ const UserAnalyzer_Page: React.FC<UserAnalyzer_Page_Props> = ({props, navigation
                                 alignSelf: 'stretch',
                                 fontSize: 16,
                             }}>
-                                {((end_Date_Value_State === null) &&(start_Date_Value_State === null))? 'Generate' :'Generated'}
+                                Generate
+                                {/*{((end_Date_Value_State === null) &&(start_Date_Value_State === null))? 'Generate' :'Generated'}*/}
                             </Text>
                         </TouchableOpacity>
                     </View>
