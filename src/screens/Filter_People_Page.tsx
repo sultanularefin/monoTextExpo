@@ -34,30 +34,6 @@ const calendarImage = require('../../assets/images/date_icon.png');
 import {UserActivity} from "../customInterfaces/UserActivity";
 
 
-import {UserData2    }    from "../dataIMP/UserData2";
-import {UserData7    } from "../dataIMP/UserData7";
-import {UserData2627 } from "../dataIMP/UserData2627";
-import {UserData10780} from "../dataIMP/UserData10780";
-import {UserData13116} from "../dataIMP/UserData13116";
-
-import {UserData14842} from "../dataIMP/UserData14842";
-import {UserData17172} from "../dataIMP/UserData17172";
-import {UserData20566} from "../dataIMP/UserData20566";
-import {UserData21632} from "../dataIMP/UserData21632";
-
-import {UserData27366} from "../dataIMP/UserData27366";
-import {UserData29127} from "../dataIMP/UserData29127";
-import {UserData30024} from "../dataIMP/UserData30024";
-import {UserData30332} from "../dataIMP/UserData30332";
-import {UserData31870} from "../dataIMP/UserData31870";
-import {UserData33550} from "../dataIMP/UserData33550";
-
-import {UserData34407} from "../dataIMP/UserData34407";
-import {UserData34429} from "../dataIMP/UserData34429";
-import {UserData36495} from "../dataIMP/UserData36495";
-
-import {UserData37327} from "../dataIMP/UserData37327";
-import {UserData38639} from "../dataIMP/UserData38639";
 
 import Header_With_Back_Handler_FilterPage from "./filter_People_Components/Header_With_Back_Handler_FilterPage";
 import Edit_Filter_Navigation_component_in_Filter_Page
@@ -73,47 +49,6 @@ dateToDayId: number;
  */
 
 
-// @ts-ignore
-const tempAllOptionsState__2   : UserActivity = UserData2;
-
-// @ts-ignore
-const tempAllOptionsState__7   : UserActivity =UserData7;
-// @ts-ignore
-const tempAllOptionsState__2627: UserActivity =UserData2627;
-// @ts-ignore
-const tempAllOptionsState__10780 : UserActivity =UserData10780;
-// @ts-ignore
-const tempAllOptionsState__13116 : UserActivity =UserData13116;
-// @ts-ignore
-const tempAllOptionsState__14842 : UserActivity =UserData14842;
-// @ts-ignore
-const tempAllOptionsState__17172 : UserActivity =UserData17172;
-// @ts-ignore
-const tempAllOptionsState__20566 : UserActivity =UserData20566;
-// @ts-ignore
-const tempAllOptionsState__21632 : UserActivity =UserData21632;
-// @ts-ignore
-const tempAllOptionsState__27366 : UserActivity =UserData27366;
-// @ts-ignore
-const tempAllOptionsState__29127 : UserActivity =UserData29127;
-// @ts-ignore
-const tempAllOptionsState__30024 : UserActivity =UserData30024;
-// @ts-ignore
-const tempAllOptionsState__30332 : UserActivity =UserData30332;
-// @ts-ignore
-const tempAllOptionsState__31870 : UserActivity =UserData31870;
-// @ts-ignore
-const tempAllOptionsState__33550 : UserActivity =UserData33550;
-// @ts-ignore
-const tempAllOptionsState__34407 : UserActivity =UserData34407;
-// @ts-ignore
-const tempAllOptionsState__34429 : UserActivity =UserData34429;
-// @ts-ignore
-const tempAllOptionsState__36495 : UserActivity =UserData36495;
-// @ts-ignore
-const tempAllOptionsState__37327 : UserActivity =UserData37327;
-// @ts-ignore
-const tempAllOptionsState__38639 : UserActivity =UserData38639;
 
 export interface Filter_People_Page_Props {
 
@@ -192,13 +127,7 @@ const Filter_People_Page: React.FC<Filter_People_Page_Props> = ({props, navigati
 
     const [show_Start_State, setShowStartState] = useState<boolean>(false);
 
-    const [user_Data_State,setUser_Data_State] =useState<UserActivity[]>([
-        tempAllOptionsState__2, tempAllOptionsState__7, tempAllOptionsState__2627, tempAllOptionsState__10780,tempAllOptionsState__13116,
-        tempAllOptionsState__14842,tempAllOptionsState__17172,tempAllOptionsState__20566, tempAllOptionsState__21632, tempAllOptionsState__27366,
-        tempAllOptionsState__29127, tempAllOptionsState__30024, tempAllOptionsState__30332, tempAllOptionsState__31870, tempAllOptionsState__33550,
-        tempAllOptionsState__34407,tempAllOptionsState__34429, tempAllOptionsState__36495, tempAllOptionsState__38639
 
-    ]);
 
     // const tempAllOptionsState:UserActivity = UserData2;
 
@@ -395,15 +324,7 @@ const Filter_People_Page: React.FC<Filter_People_Page_Props> = ({props, navigati
     // Interests: {loggerPerson.interest.map((item: string) => (item !== null) && item.toLocaleLowerCase()).
     // join(', ')}.
 
-    const allUserSName= user_Data_State.map((item: UserActivity) =>
-        item.profile.name).join(', ');
 
-    const allUserIDS= user_Data_State.map((item: UserActivity) =>
-        item.toString).join(', ');
-
-
-    console.log("allUserSName::",allUserSName);
-    console.log("allUserIDS::",allUserIDS);
 
 
     /*

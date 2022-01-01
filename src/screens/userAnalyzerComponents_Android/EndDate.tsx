@@ -147,6 +147,8 @@ const EndDate: React.FC<EndDate_Props> = ({
                             :"compact"}
 
                         textColor='crimson'
+                        maximumDate={new Date(2016, 12, 1)}
+                        minimumDate={new Date(2016, 0, 1)}
                     />
                 )}
 

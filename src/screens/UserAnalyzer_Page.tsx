@@ -49,6 +49,7 @@ export interface one_User_Activity_Status_interface{
     status: string,
     // geolocation_Lat_Long: typeof location,
     isSelected: boolean,
+    // string: string,
 
 }
 
@@ -100,6 +101,7 @@ const UserAnalyzer_Page: React.FC<UserAnalyzer_Page_Props> = ({props, navigation
                 index: 0,
                 status: "Active",
                 isSelected: true,
+
             },
             {
                 index: 1,
