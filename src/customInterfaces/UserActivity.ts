@@ -49,7 +49,7 @@ export interface Calendar {
             meal: Meal;
             details: {
                 date: string;
-                dishes: any//;Dishes;
+                dishes: any;//;Dishes;
                 tags: any[];
                 photos: any[];
             };

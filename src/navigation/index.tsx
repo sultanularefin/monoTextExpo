@@ -47,7 +47,7 @@ function RootNavigator() {
         <Stack.Navigator initialRouteName={"UserAnalyzer_Page"}>
 
 
-            <Stack.Group screenOptions={{ presentation: 'modal' }}>
+            <Stack.Group screenOptions={{presentation: 'modal'}}>
                 <Stack.Screen
                     name="UserAnalyzer_Page"
                     component={UserAnalyzer_Page}
