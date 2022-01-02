@@ -1,7 +1,8 @@
-export const UserData20566={ 
+export const UserData20566={
     "profile": {
       "pictureUrl": "https://chaldal.tech/assignment-assets/austin-wade-X6Uj51n5CE8-unsplash.jpg",
-      "name": "Arif Rahman"
+      "name": "Arif Rahman",
+      "userID_Custom_Arefin": 20566,
     },
     "calendar": {
       "dateToDayId": {

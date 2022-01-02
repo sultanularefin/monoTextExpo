@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import {
+    Alert,
     FlatList,
     Image, KeyboardAvoidingView,
     Platform, SafeAreaView, ScrollView,
@@ -29,6 +30,7 @@ import {
     filter_Users_By_updated_2_date_intervals_1,
     user_Filter_Payload_Interface
 } from "../appStore/Reducers/UserAnalyzerSlice";
+import Filter_People_Page from "./Filter_People_Page";
 
 
 const calendarImage = require('../../assets/images/date_icon.png');
@@ -231,28 +233,11 @@ const UserAnalyzer_Page: React.FC<UserAnalyzer_Page_Props> = ({props, navigation
 
     const generate_Button_handler = async () => {
 
-        // const only_Selected_Group_Partner_Friends = forwardable_Group_or_PartnerList.filter(
-        //     (oneBYOne: forward_From_GroupChat_Interface) =>
-        //         oneBYOne.isSelected_For_Forward
-        // );
-
-
-        // console.log("start_Date_Value_State: ", start_Date_Value_State);
-        // console.log("end_Date_Value_State: ", end_Date_Value_State);
-        // console.log("start_Date_Value_State?.toLocaleDateString('en-BD'): ", start_Date_Value_State?.toLocaleDateString('en-BD'));
-        // console.log("end_Date_Value_State?.toLocaleDateString('en-BD'): ", end_Date_Value_State?.toLocaleDateString('en-BD'));
 
         const startDate=  start_Date_Value_State?.toLocaleDateString('en-BD');
 
         const endDate = end_Date_Value_State?.toLocaleDateString('en-BD');
-        // console.log("end_Date_Value_State?.toLocaleDateString('en-BD'): ", );
 
-        // start_Date_Value_State?.toLocaleDateString('en-BD'):  12/15/21
-        // end_Date_Value_State?.toLocaleDateString('en-BD'):  01/04/22
-
-        // console.log("before invoking dispatch 111");
-
-        // console.log("all_Activity_Status_of_Users_State: ",all_Activity_Status_of_Users_State);
 
         if((startDate) && (endDate)){
 
@@ -263,20 +248,30 @@ const UserAnalyzer_Page: React.FC<UserAnalyzer_Page_Props> = ({props, navigation
                 userCategory: all_Activity_Status_of_Users_State,
             };
 
-            console.log("before invoking dispatch222");
+            // console.log("before invoking dispatch222");
 
             dispatch(filter_Users_By_updated_2_date_intervals_1(payLoad));
+
+           return navigation.navigate("Filter_People_Page")
         }
         else{
+            Alert.alert(
+                'startDate or endDate missing',
+                `StartDate (+${startDate} EndDate${endDate})?`,
+                [
+                    {
+                        text: "close",
+                        onPress: () => console.log("close Pressed"),
+                        style: "cancel",
+                    },
 
-            console.log("at else");
+
+                ],
+                {cancelable: true}
+            );
+
         }
 
-        // 999
-
-        // start_Date_Value_State
-        // end_Date_Value_State
-        // all_Activity_Status_of_Users_State
     }
 
 
@@ -295,7 +290,7 @@ const UserAnalyzer_Page: React.FC<UserAnalyzer_Page_Props> = ({props, navigation
 
         };
 
-        console.log("payLoad_update_Partner_Group_selected: ",payLoad_update_Partner_Group_selected);
+        // console.log("payLoad_update_Partner_Group_selected: ",payLoad_update_Partner_Group_selected);
 
         // dispatch(update_Forward_CheckBox_Selected_Grp_Partner(payLoad_update_Partner_Group_selected));
 

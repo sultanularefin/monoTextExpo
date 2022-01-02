@@ -83,11 +83,11 @@ const Search_People: React.FC<Search_People_Props> = forwardRef((
                                         Search_People_Styles.input,
                                         {
                                             height: props.deviceHeight_1/12,
-                                            color: 'white',
+                                            color: 'black',
                                         }
                                     ]}
                                 placeholder='Search by name'
-                                placeholderTextColor ={'gray'}
+                                placeholderTextColor ={'black'}
                                 // ref={refSearch}
                                 ref= {forwardedRef}
                                 onChangeText={ (value:string) => props.setSearch_1(value)}
@@ -97,6 +97,38 @@ const Search_People: React.FC<Search_People_Props> = forwardRef((
                                 value = {props.filter_By_Text_InputState_1}
 
                             />
+
+                            {/*<View style={{*/}
+                            {/*    flexDirection: 'column',*/}
+                            {/*    flex: 0.1,*/}
+                            {/*    justifyContent: 'center',*/}
+                            {/*    // backgroundColor: 'gold',*/}
+                            {/*}}>*/}
+                            {/*    <Ionicons style={Search_People_Styles.searchIcon}*/}
+                            {/*              name='ios-search'*/}
+                            {/*              size={30}*/}
+                            {/*              color='gray'*/}
+                            {/*    />*/}
+                            {/*</View>*/}
+
+                            <View style={{
+                                flexDirection: 'column',
+                                flex: 0.2,
+                                justifyContent: 'center',
+                                // backgroundColor: 'gold',
+                            }}
+                            >
+                                <TouchableOpacity
+                                    onPress={props.clearSearch_1}>
+
+                                    <Entypo style={{
+                                    }}
+                                            name='circle-with-cross'
+                                            size={40}
+                                            color='black'
+                                    />
+                                </TouchableOpacity>
+                            </View>
                         </View>
 
 

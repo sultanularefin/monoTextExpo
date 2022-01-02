@@ -15,28 +15,12 @@ import { Ionicons,Feather } from '@expo/vector-icons';
 
 import moment from 'moment';
 import {User_Items_Props} from "./User_Items";
+import {Profile} from "../../customInterfaces/UserActivity";
 const defaultImage = require('./../../../assets/default-image_01.jpg');
 const videoImage = require('./../../../assets/video-image.png');
 export interface OneUser_View_withOther_Components_Props{
-    property2:{
-        user: string,
-        uploadedBy: string,
-        date: Date,
-        itemId: number,//number[],
-
-
-        itemData:{
-            urlText: string,
-            imageURL: string,//string[],
-            nameText: string,
-            tagText: string,
-            detailText: string,
-            categoryText: string,
-            amountNumber: Number,
-        }
-        id: string,
-    },
-    currentIndexLast:number,
+    property2: Profile,
+    // currentIndexLast:number,
 
     ImageResource:string,
 
@@ -52,11 +36,11 @@ const OneUser_View_withOther_Components: React.FC<OneUser_View_withOther_Compone
 
 
 
-    const index = props.currentIndexLast;
+    // const index = props.currentIndexLast;
     const deviceWidth =   Dimensions.get('window').width;
     const deviceHeight =  Dimensions.get('window').height;
 
-    let dateWithMoment = moment(props.property2.date).format('ll');
+    // let dateWithMoment = moment(props.property2.date).format('ll');
 
 
     //console.log("props:__OneUser_View_withOther_Components___ ",props);
@@ -91,9 +75,9 @@ const OneUser_View_withOther_Components: React.FC<OneUser_View_withOther_Compone
                     alignSelf: 'flex-end',
                     alignContent: 'flex-end',
                     justifyContent: 'center',
-                    width: 40,
+                    width:  100,
                     height: 40,
-                    backgroundColor: '#FFFFFF',
+                    backgroundColor: 'grey',
                     opacity: 0.6,
 
                 }}>
@@ -111,7 +95,7 @@ const OneUser_View_withOther_Components: React.FC<OneUser_View_withOther_Compone
                             marginRight: 5,
                             paddingBottom: 1
                         }}>
-                            <Feather
+                         {/*   <Feather
                                 name='x-circle'
                                 size={25}
                                 style={{
@@ -120,7 +104,8 @@ const OneUser_View_withOther_Components: React.FC<OneUser_View_withOther_Compone
                                     color: 'red',
 
                                 }}
-                            />
+                            />*/}
+                            <Text>Not Implemented</Text>
                         </View>
 
                     </TouchableOpacity>
@@ -150,9 +135,9 @@ const OneUser_View_withOther_Components: React.FC<OneUser_View_withOther_Compone
                                 fontWeight: '500',
                                 fontSize: 16,
 
-                            }}>{' '}{props.property2.itemData.nameText}, {' '}
-                                {props.property2.itemData.categoryText},{' '}
-                                {props.property2.itemData.amountNumber}
+                            }}>{' '}{props.property2.name}, {' '}
+                                {/*{props.property2.itemData.categoryText},{' '}*/}
+                                {/*{props.property2.itemData.amountNumber}*/}
                             </Text>
                         </View>
                     </ScrollView>
@@ -177,7 +162,11 @@ const OneUser_View_withOther_Components: React.FC<OneUser_View_withOther_Compone
                                 paddingRight: 5,
 
                             }}
-                            >{dateWithMoment}{' '}
+                            >
+                                {/*{dateWithMoment}{' '}*/}
+
+                                {props.property2.userID_Custom_Arefin}{' '}
+
 
 
                             </Text>

@@ -7,13 +7,11 @@ import {
     TouchableOpacity,
     useWindowDimensions,
 } from 'react-native';
-// import DateTimePickerModal from "react-native-modal-datetime-picker";
+
 import DateTimePicker from '@react-native-community/datetimepicker';
 import EditScreenInfo from '../components/EditScreenInfo';
 
 import {Ionicons, Octicons,MaterialCommunityIcons} from '@expo/vector-icons';
-
-// import Ionicons from "react-native-vector-icons/Ionicons";
 
 import {
     Text,
@@ -24,29 +22,27 @@ import {useRef, useState} from "react";
 import StartDate from "./userAnalyzerComponents_Android/StartDate";
 import EndDate from "./userAnalyzerComponents_Android/EndDate";
 import CheckBoxComponent from "./userAnalyzerComponents_Android/CheckBoxComponent";
-import {useAppDispatch} from "../appStore/app/hooks";
+import {useAppDispatch, useAppSelector} from "../appStore/app/hooks";
 import {CommonActions} from "@react-navigation/native";
 import Search_People from "./filter_People_Components/Search_People";
 import User_Items from "./filter_People_Components/User_Items";
 
 
 const calendarImage = require('../../assets/images/date_icon.png');
-import {UserActivity} from "../customInterfaces/UserActivity";
+import {Profile, UserActivity} from "../customInterfaces/UserActivity";
 
 
 
 import Header_With_Back_Handler_FilterPage from "./filter_People_Components/Header_With_Back_Handler_FilterPage";
 import Edit_Filter_Navigation_component_in_Filter_Page
     from "./filter_People_Components/Edit_Filter_Navigation_component_in_Filter_Page";
+// import {Profile} from "../appStore/Reducers/authSlice";
+import {
+    filter_person_by_Search_String,
+    reset_search,
+    select_ALL_Profiles
+} from "../appStore/Reducers/UserAnalyzerSlice";
 
-/*
-
-    dateToDayId: {
-        string: number;
-    };
-
-dateToDayId: number;
- */
 
 
 
@@ -149,101 +145,14 @@ const Filter_People_Page: React.FC<Filter_People_Page_Props> = ({props, navigati
 
     const dispatch = useAppDispatch();
 
-
-    const [filtered_Items_State,setFiltered_Items_State]
-        = useState<OneUser_From_Asset_Interface[]|[]>(
-
-
-
-
-
-        [
-            {
-                date: convert_string_date_to_UTC_date_TripzSlice('2021-12-01 11:33:19'),
-                id:'111',
-                itemData:{
-                    amountNumber: 111,
-                    categoryText: "cloth",
-                    detailText: "shirt",
-                    imageURL: "",
-                    nameText: "new denim shirt",
-                    nameTextHalfWidth: "new denim shirt",
-                    tagText: "shirt",
-                    urlText: "",
-                    priceText:22,
-                    haveItCondition: true,
-                },
-                uploadedBy: "Arefin",
-                user: "Arefin",
-                itemId:111,
-            },
-            {
-                date: convert_string_date_to_UTC_date_TripzSlice('2021-12-01 11:33:19'),
-                id:'222',
-                itemData:{
-                    amountNumber: 222,
-                    categoryText: "cloth",
-                    detailText: "shirt",
-                    imageURL: "",
-                    nameText: "denim new shirt",
-                    nameTextHalfWidth: "denim new shirt",
-                    tagText: "shirt",
-                    urlText: "",
-                    priceText:33,
-                    haveItCondition: true,
-                },
-                uploadedBy: "Arefin",
-                user: "Arefin",
-                itemId:222,
-            },
-            {
-                date: convert_string_date_to_UTC_date_TripzSlice('2021-12-01 11:33:19'),
-                id:'333',
-                itemData:{
-                    amountNumber: 888,
-                    categoryText: "cloth",
-                    detailText: "shirt",
-                    imageURL: "",
-                    nameText: "denim shirt new",
-                    nameTextHalfWidth: "denim shirt new",
-                    tagText: "shirt",
-                    urlText: "",
-                    priceText:77,
-                    haveItCondition: true,
-                },
-                uploadedBy: "Arefin",
-                user: "Arefin",
-                itemId:333,
-            },
-            {
-                date: convert_string_date_to_UTC_date_TripzSlice('2021-12-01 11:33:19'),
-                id:'444',
-                itemData:{
-                    amountNumber: 111,
-                    categoryText: "cloth",
-                    detailText: "shirt",
-                    imageURL: "",
-                    nameText: "shirt new denim",
-                    nameTextHalfWidth: "shirt new denim",
-                    tagText: "shirt",
-                    urlText: "",
-                    priceText:414,
-                    haveItCondition: true,
-                },
-                uploadedBy: "Arefin",
-                user: "Arefin",
-                itemId:427,
-            },
-        ]
+    // const {
+    //
+    //     localStorage,
+    // } = useAppSelector(select_logger_person_data);
+    const filtered_Items_State:Profile[]= useAppSelector(select_ALL_Profiles);
 
 
-
-
-
-    ); //WILL BE LOADED FROM REDUX, ONCE SUCCESSFULLY LOGGED IN.
-
-
-
+    // console.log("filtered_Items_State: ",filtered_Items_State);
 
     const [all_Activity_Status_of_Users_State, setAll_Activity_Status_of_Users_State]
         = useState<one_User_Activity_Status_interface[]|[]>(
@@ -280,6 +189,9 @@ const Filter_People_Page: React.FC<Filter_People_Page_Props> = ({props, navigati
 
 
 
+    const deviceHeight = useWindowDimensions().height;
+    const deviceWidth = useWindowDimensions().width;
+
 
     const ref_User_Search = useRef<TextInput>(null);
 
@@ -306,12 +218,20 @@ const Filter_People_Page: React.FC<Filter_People_Page_Props> = ({props, navigati
 
         // setActiveChatListStateAndNotSearchState(true);
 
+        dispatch(reset_search(null));
+
     };
 
     const searchFilterFunction = (text: string) => {
 
 
         set_Search_State(text);
+        // filtered_Items_State
+
+        if(text.trim().length===0){
+            return;
+        }
+        dispatch(filter_person_by_Search_String(text));
 
     };
 
@@ -353,164 +273,178 @@ const Filter_People_Page: React.FC<Filter_People_Page_Props> = ({props, navigati
                 flexDirection: 'column',
             }}
         >
-            <View style={user_Analyzer_Styles.container}>
 
 
+            <KeyboardAvoidingView
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                style={{
 
-
-
-
-                {/*teal navigator custom begins here...*/}
-
-                <View
-                    style={{
-                        // flex: 0.8,
-                        height: displayHeight/20,
-                        backgroundColor: 'white',
-                        flexDirection: 'column',
-                        justifyContent: 'flex-start',
-                    }}
-                >
-                </View>
-
-
-                <Header_With_Back_Handler_FilterPage
-                    displayHeight={displayHeight}
-                    displayWidth={displayWidth}
-                    navigation={navigation} />
-
-
-
-
-
-                {/*0.8 teal colored header ends here...*/}
-
-
-                {/*Edit Filter portion begins here...*/}
-
-                <Edit_Filter_Navigation_component_in_Filter_Page
-                    displayHeight={displayHeight}
-                    displayWidth={displayWidth}
-                    navigation={navigation}
-                />
-
-                {/*Edit FIlter portion ends here..*/}
-
-
-
-
-
-
-                {/*Search Portion begins here...*/}
-
-                <View style={{
-                    height: displayHeight/10,
-                    backgroundColor: 'red',
+                    // flex: 9,
                     flexDirection: 'column',
-                    justifyContent: 'flex-start',
-                    width: displayWidth,
-                    marginBottom: 10,
-                }}>
+                    justifyContent: "flex-start",
+                    height: deviceHeight,
+                    // backgroundColor: 'gold',
+
+                }}
+            >
 
 
-                    <View
-                        style={{
-                            // flex: 1,
-                            height: '100%',
-                            flexDirection: 'row',
-                            justifyContent: 'flex-start',
-                            width: displayWidth,
-                            backgroundColor: 'white',
 
-                        }}
-                    >
+                    <View style={user_Analyzer_Styles.container}>
 
 
-                        <Search_People
 
-                            filter_By_Text_InputState_1={search_State}
-                            setSearch_1={searchFilterFunction}
-                            clearSearch_1={clearSearch}
-                            deviceHeight_1={displayHeight}
-                            deviceWidth_1={displayWidth}
-                            ref={ref_User_Search}
+
+
+
+                        {/*teal navigator custom begins here...*/}
+
+                        <View
+                            style={{
+                                // flex: 0.8,
+                                height: displayHeight/20,
+                                backgroundColor: 'white',
+                                flexDirection: 'column',
+                                justifyContent: 'flex-start',
+                            }}
+                        >
+                        </View>
+
+
+                        <Header_With_Back_Handler_FilterPage
+                            displayHeight={displayHeight}
+                            displayWidth={displayWidth}
+                            navigation={navigation} />
+
+
+
+
+
+                        {/*0.8 teal colored header ends here...*/}
+
+
+                        {/*Edit Filter portion begins here...*/}
+
+                        <Edit_Filter_Navigation_component_in_Filter_Page
+                            displayHeight={displayHeight}
+                            displayWidth={displayWidth}
+                            navigation={navigation}
                         />
 
+                        {/*Edit FIlter portion ends here..*/}
 
 
 
 
-                        {/*partner name and image starts here*/}
+
+
+                        {/*Search Portion begins here...*/}
+
+                        <View style={{
+                            height: displayHeight/10,
+                            backgroundColor: 'red',
+                            flexDirection: 'column',
+                            justifyContent: 'flex-start',
+                            width: displayWidth,
+                            marginBottom: 10,
+                        }}>
+
+
+                            <View
+                                style={{
+                                    // flex: 1,
+                                    height: '100%',
+                                    flexDirection: 'row',
+                                    justifyContent: 'flex-start',
+                                    width: displayWidth,
+                                    backgroundColor: 'white',
+
+                                }}
+                            >
+
+
+                                <Search_People
+
+                                    filter_By_Text_InputState_1={search_State}
+                                    setSearch_1={searchFilterFunction}
+                                    clearSearch_1={clearSearch}
+                                    deviceHeight_1={displayHeight}
+                                    deviceWidth_1={displayWidth}
+                                    ref={ref_User_Search}
+                                />
+
+
+
+
+
+                                {/*partner name and image starts here*/}
+
+                            </View>
+
+
+                            {/*Users_FRom__Asset_Items_Begins__Here:*/}
+
+
+                        </View>
+
+
+                        {/*Search Portion ends her..*/}
+
+
+
+
+
+                        <View style={{
+                            flex: 6,
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            // width: '95%',
+                            borderRadius: 1,
+                            // borderWidth: 2,
+                            // borderColor: 'teal',
+
+                        }}
+
+                        >
+
+
+
+                            <FlatList
+                                data={filtered_Items_State}
+                                numColumns={2}
+                                renderItem={({item, index}) => (
+
+                                    <User_Items
+
+                                        currentIndex={index}
+                                        key={index.toString()}
+                                        property = {item}
+
+                                    />
+                                )}
+                                keyExtractor={(item:Profile, index00:number) => `${index00}+${item.userID_Custom_Arefin}`}
+                                showsHorizontalScrollIndicator={false}
+                            />
+
+
+
+
+                        </View>
+
+
+                        {/*empty view...*/}
+                        <View style={{
+                            flexDirection: 'column',
+                            flex: 1,
+                        }}
+                        >
+                        </View>
+                        {/*empty view...*/}
 
                     </View>
 
-
-                    {/*Users_FRom__Asset_Items_Begins__Here:*/}
-
-
-                </View>
-
-
-                {/*Search Portion ends her..*/}
-
-
-
-
-
-                <View style={{
-                    flex: 6,
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    // width: '95%',
-                    borderRadius: 1,
-                    // borderWidth: 2,
-                    // borderColor: 'teal',
-
-                }}
-
-                >
-
-
-
-                    <FlatList
-                        data={filtered_Items_State}
-                        numColumns={2}
-                        // renderItem= {renderItemAlphabets}
-
-
-                        renderItem={({item, index}) => (
-                            /*<Text>{item.itemData.nameText}</Text>*/
-                            <User_Items
-
-                                currentIndex={index}
-                                key={index.toString()}
-                                property = {item}
-
-                            />
-                        )}
-                        // keyExtractor={(index) => index.toString()}
-                        keyExtractor={(item:OneUser_From_Asset_Interface, index00:number) => `${index00}+${item.itemData.nameText}`}
-                        showsHorizontalScrollIndicator={false}
-                        // horizontal={true}
-                    />
-
-
-
-
-                </View>
-
-
-                {/*empty view...*/}
-                <View style={{
-                    flexDirection: 'column',
-                    flex: 1,
-                }}
-                >
-                </View>
-                {/*empty view...*/}
-
-            </View>
+            </KeyboardAvoidingView>
         </SafeAreaView>
     );
 }

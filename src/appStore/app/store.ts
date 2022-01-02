@@ -9,7 +9,7 @@ import {
 
 } from '@reduxjs/toolkit';
 
-import authSlice from "../Reducers/authSlice";
+// import authSlice from "../Reducers/authSlice";
 import UserAnalyzerSlice from "../Reducers/UserAnalyzerSlice";
 
 
@@ -31,7 +31,7 @@ const rootReducer: Reducer = (state: RootState, action: AnyAction) => {
 const combinedReducer = combineReducers({
 
 
-    authReducer: authSlice,
+    // authReducer: authSlice,
     UserAnalyzer_Reducer: UserAnalyzerSlice,
 
 

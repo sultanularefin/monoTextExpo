@@ -1,7 +1,8 @@
 export const UserData7={
     "profile": {
       "pictureUrl": "https://chaldal.tech/assignment-assets/gabriel-silverio-u3WmDyKGsrY-unsplash.jpg",
-      "name": "Brittany Dodson"
+      "name": "Brittany Dodson",
+      "userID_Custom_Arefin": 7,
     },
     "calendar": {
       "dateToDayId": {

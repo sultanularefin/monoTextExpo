@@ -1,7 +1,8 @@
-export const UserData30024={  
+export const UserData30024={
     "profile": {
       "pictureUrl": "https://chaldal.tech/assignment-assets/nonsap-visuals-kMJp7620W6U-unsplash.jpg",
-      "name": "Nora Nadal"
+      "name": "Nora Nadal",
+      "userID_Custom_Arefin": 30024,
     },
     "calendar": {
       "dateToDayId": {

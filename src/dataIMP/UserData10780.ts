@@ -1,7 +1,8 @@
 export const UserData10780={
     "profile": {
       "pictureUrl": "https://chaldal.tech/assignment-assets/nonsap-visuals-kMJp7620W6U-unsplash.jpg",
-      "name": "Nicola Ortega"
+      "name": "Nicola Ortega",
+      "userID_Custom_Arefin": 10780,
     },
     "calendar": {
       "dateToDayId": {

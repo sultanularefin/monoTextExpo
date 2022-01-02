@@ -40,34 +40,12 @@ export interface user_Filter_Payload_Interface {
 
 // startDate,endDate,all_Activity_Status_of_Users_State
 
-export interface one_Tripz_connect_later_Data_interface {
 
-    activity_id: number, //string
-    created_at: string,
-    id: number,  // string
-    mind_content: string,
-    mobile_no: string,
-    name: string,
-    status: number, // string,
-    suggested: string,
-    time: string,
-    trip_by: string,
-    // trip_datetime: string,
-    trip_start_date: Date,
-    // trip_datetime_end: string,
-    trip_end_date: Date,
-    trip_from: string,
-    trip_purpose: string,
-    trip_to: string,
-    update_at: string,
-    user_id: string,
-    user_profile_photo: string,
-}
 
 
 import {RootState} from "../app/store";
 import {one_User_Activity_Status_interface} from "../../screens/UserAnalyzer_Page";
-import {UserActivity} from "../../customInterfaces/UserActivity";
+import {dateToDayId_Interface, Profile, UserActivity} from "../../customInterfaces/UserActivity";
 // import {useState} from "react";
 
 
@@ -121,7 +99,8 @@ const tempAllOptionsState__38639 : UserActivity =UserData38639;
 
 export interface UserAnalyzer_State_interface extends baseInterface{
 
-    all_connect_later_Data: one_Tripz_connect_later_Data_interface[],
+    all_USER_Data: Profile[],
+    all_Read_USER_Data: Profile[],
     user_Data_State_in_Slice : UserActivity[],
 
 }
@@ -142,7 +121,7 @@ const initialState: UserAnalyzer_State_interface = {
     // lazy_loading____above------------
 
 
-    all_connect_later_Data: [],
+    all_USER_Data: [],
     user_Data_State_in_Slice: ([
         tempAllOptionsState__2, tempAllOptionsState__7, tempAllOptionsState__2627, tempAllOptionsState__10780,tempAllOptionsState__13116,
         tempAllOptionsState__14842,tempAllOptionsState__17172,tempAllOptionsState__20566, tempAllOptionsState__21632, tempAllOptionsState__27366,
@@ -150,6 +129,7 @@ const initialState: UserAnalyzer_State_interface = {
         tempAllOptionsState__34407,tempAllOptionsState__34429, tempAllOptionsState__36495, tempAllOptionsState__38639
 
     ]),
+    all_Read_USER_Data: [],
 };
 
 
@@ -167,50 +147,6 @@ const initailState0 = initialState;
 
 
 
-//1111
-export const get_all_tripz_later_Async = createAsyncThunk(
-    'userAnalyzer/get_All_tripz_later',
-    async (
-        userID:string,
-        thunkAPI) => {
-        try {
-            // console.log("userID: ", userID);
-            const response = await fetch(
-
-                'https://tripzchat.com/api_dev/api/trip/getAllTripLater',
-                {
-                    method: 'POST',
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-
-                    body: JSON.stringify ({
-                        user_id: userID,
-                    }),
-
-
-                }
-            );
-            const data = await response.json();
-
-            // console.log("data:, connect slice get all tripz later", data);
-            console.log("response.status: ", response.status);
-
-            if (response.status === 200) {
-
-                return data;
-            } else {
-                return thunkAPI.rejectWithValue(data);
-            }
-        } catch (error:any) {
-            console.log('Error', error.response.data);
-            thunkAPI.rejectWithValue(error.response.data);
-        }
-    }
-);
-
-
 
 
 
@@ -219,15 +155,15 @@ const filter_SelectedDate_between_start_date_and_end_date=(startDate:string, end
 
     if (selectedDate > startDate && selectedDate < endDate) {
 
-        console.log(`Selected date ${selectedDate} between startDate:${startDate} and endDate${endDate}`);
+        // console.log(`Selected date ${selectedDate} between startDate:${startDate} and endDate${endDate}`);
 
         return true;
         // el_down.innerHTML = "Date is in between the "
         //     + "Date 1 and Date 2";
     }
     else{
-        console.log("not true");
-        console.log(`Selected date ${selectedDate} not between startDate:${startDate} and endDate${endDate}`);
+        // console.log("not true");
+        // console.log(`Selected date ${selectedDate} not between startDate:${startDate} and endDate${endDate}`);
         return  false;
     }
 
@@ -240,7 +176,7 @@ const filter_SelectedDate_between_start_date_and_end_date=(startDate:string, end
 
 const filter_SelectedDate_between_start_date_and_end_date___4=(startDate:string, endDate:string, selectedDate:string)=>{
 
-    console.log(`Selected date ${selectedDate} between startDate:${startDate} and endDate${endDate}`);
+    // console.log(`Selected date ${selectedDate} between startDate:${startDate} and endDate${endDate}`);
 
     const fromDate = startDate.split('-');
     // '2020-01-30T05:00:00.000Z'.split('-');
@@ -257,14 +193,14 @@ const filter_SelectedDate_between_start_date_and_end_date___4=(startDate:string,
     const compareBetween = (startValue:string, compareValue:string, endValue:string) => partStringToInt(startValue) <= partStringToInt(compareValue) && partStringToInt(compareValue) <= partStringToInt(endValue);
 
     const compareYearBetween_Strt_Sel_End = (startValue:string, compareValue:string, endValue:string) => partStringToInt(startValue) <= partStringToInt(compareValue) && partStringToInt(compareValue) <= partStringToInt(endValue);
-    console.log(`compareYearBetween_Strt_Sel_End(${fromDate[0]}, ${compareDate[0]}, ${toDate[0]}): ", ${compareYearBetween_Strt_Sel_End(fromDate[0], compareDate[0], toDate[0])}`);
+    // console.log(`compareYearBetween_Strt_Sel_End(${fromDate[0]}, ${compareDate[0]}, ${toDate[0]}): ", ${compareYearBetween_Strt_Sel_End(fromDate[0], compareDate[0], toDate[0])}`);
 
     const compareMontHBetween__Strt_Sel_End = (startValue:string, compareValue:string, endValue:string) => partStringToInt(startValue) <= partStringToInt(compareValue) && partStringToInt(compareValue) <= partStringToInt(endValue);
-    console.log(`compareMontHBetween__Strt_Sel_End(${fromDate[1]}, ${compareDate[1]}, ${toDate[1]}): ", ${compareMontHBetween__Strt_Sel_End(fromDate[1], compareDate[1], toDate[1])}`);
+    // console.log(`compareMontHBetween__Strt_Sel_End(${fromDate[1]}, ${compareDate[1]}, ${toDate[1]}): ", ${compareMontHBetween__Strt_Sel_End(fromDate[1], compareDate[1], toDate[1])}`);
 
 
     const compareDayBetween__Strt_Sel_End = (startValue:string, compareValue:string, endValue:string) => partStringToInt(startValue) <= partStringToInt(compareValue) && partStringToInt(compareValue) <= partStringToInt(endValue);
-    console.log(`compareDayBetween__Strt_Sel_End(${fromDate[2]}, ${compareDate[2]}, ${toDate[2]}): ", ${compareDayBetween__Strt_Sel_End(fromDate[2], compareDate[2], toDate[2])}`);
+    // console.log(`compareDayBetween__Strt_Sel_End(${fromDate[2]}, ${compareDate[2]}, ${toDate[2]}): ", ${compareDayBetween__Strt_Sel_End(fromDate[2], compareDate[2], toDate[2])}`);
 
 
 
@@ -280,7 +216,7 @@ const filter_SelectedDate_between_start_date_and_end_date___4=(startDate:string,
 
 const get_dayID_From_Date=(startDate:string, endDate:string, selectedDate:string)=>{
 
-    console.log(`Selected date ${selectedDate} between startDate:${startDate} and endDate${endDate}`);
+    // console.log(`Selected date ${selectedDate} between startDate:${startDate} and endDate${endDate}`);
 
     const fromDate = startDate.split('-');
     // '2020-01-30T05:00:00.000Z'.split('-');
@@ -324,6 +260,17 @@ const get_dayID_From_Date=(startDate:string, endDate:string, selectedDate:string
 
 };
 
+// const all_DateIDS_in_interval= filter__DateIDs_in_Interval(all_Interval_Days,all__DateIDS);
+const filter__DateIDs_in_Interval= (all_Interval_Days:string[],all__DateIDS:{oneDay:dateToDayId_Interface}[])=> {
+
+
+
+
+
+    // console.log(found);
+
+    return "RPG";
+}
 
 
 const filter_User_BY_Date_and_Status = (state: any,
@@ -331,9 +278,9 @@ const filter_User_BY_Date_and_Status = (state: any,
 
 
 
-    const days:string[]= [];
+    const all_Interval_Days:string[]= [];
 
-    console.log("action.payload;: ",action.payload);
+    // console.log("action.payload;: ",action.payload);
 
     const temp__all_connect_later_Data = state.all_connect_later_Data;  // all_connect_later_Data//  <====   feedzData;
 
@@ -351,18 +298,18 @@ const filter_User_BY_Date_and_Status = (state: any,
     const start_Date_Splitted = startDate.split('/');
 
 
-    const date_OF_StartDate= parseInt(start_Date_Splitted[0],10);
-    const month_OF_StartDate = parseInt(start_Date_Splitted[1],10);//-1; // parseInt(parts2[1],10) - 1;
-    const year_OF_StartDate = parseInt(start_Date_Splitted[2],10);
+    const date_OF_StartDate= parseInt(start_Date_Splitted[1],10); // day
+    const month_OF_StartDate = parseInt(start_Date_Splitted[0],10); // month //-1; // parseInt(parts2[1],10) - 1;
+    const year_OF_StartDate = parseInt(start_Date_Splitted[2],10); // year
 
 
 
 
 
-    console.log("start_Date_Splitted: ",start_Date_Splitted);
-    console.log("year_OF_StartDate: ",year_OF_StartDate);
-    console.log("month_OF_StartDate: ",month_OF_StartDate);
-    console.log("date_OF_StartDate: ",date_OF_StartDate);
+    // console.log("start_Date_Splitted: ",start_Date_Splitted);
+    // console.log("year_OF_StartDate: ",year_OF_StartDate);
+    // console.log("month_OF_StartDate: ",month_OF_StartDate);
+    // console.log("date_OF_StartDate: ",date_OF_StartDate);
 
 
 
@@ -372,19 +319,18 @@ const filter_User_BY_Date_and_Status = (state: any,
     const end_Date_Splitted = endDate.split('/');
 
 
-    const date_OF_EndDate= parseInt(end_Date_Splitted[0],10);
-    const month_OF_EndDate = parseInt(end_Date_Splitted[1],10);//-1; // parseInt(parts2[1],10) - 1;
-    const year_OF_EndDate= parseInt(end_Date_Splitted[2],10);
+    const date_OF_EndDate= parseInt(end_Date_Splitted[1],10); // day
+    const month_OF_EndDate = parseInt(end_Date_Splitted[0],10); // month //-1; // parseInt(parts2[1],10) - 1;
+    const year_OF_EndDate= parseInt(end_Date_Splitted[2],10); // year
 
 
 
 
 
-    console.log("end_Date_Splitted: ",end_Date_Splitted);
-
-    console.log("year_OF_EndDate: ",year_OF_EndDate);
-    console.log("month_OF_EndDate: ",month_OF_EndDate);
-    console.log("date_OF_EndDate: ",date_OF_EndDate);
+    // console.log("end_Date_Splitted: ",end_Date_Splitted);
+    // console.log("year_OF_EndDate: ",year_OF_EndDate);
+    // console.log("month_OF_EndDate: ",month_OF_EndDate);
+    // console.log("date_OF_EndDate: ",date_OF_EndDate);
 
 
 
@@ -400,156 +346,84 @@ const filter_User_BY_Date_and_Status = (state: any,
     let inital_year_only = year_OF_StartDate;
     let end_year_only = year_OF_EndDate;
 
-
+    const yearly_Month_Limit =12;
     const monthly_Date_Limit =31;
     let counter =0;
     console.log("counter: ", counter);
 
 
-    do {
-        console.log("inital_Date_only: ",inital_Date_only);
+    console.log("inital_Date_only: ",inital_Date_only);
+    console.log("end_Date_only: ",end_Date_only);
+
+
+    // for(i = 0, j = 0; (i < p) && (j < q); i++, j++){
+    // i < p, j < q
+    for(inital_Date_only; (inital_Date_only <= end_Date_only) && (inital_Month_only<=end_Month_only) && (inital_year_only<=end_year_only); inital_Date_only++ ){
 
         const oneDate=`20${inital_year_only}-${
             ((inital_Month_only.toString()).length===2)
-            ?inital_Month_only
+                ?inital_Month_only
                 :"0"+inital_Month_only
         }-${
             ((inital_Date_only.toString()).length===2)
                 ?inital_Date_only
                 :"0"+inital_Date_only
         }`
-        days.push(oneDate);
-        inital_Date_only++;
+        all_Interval_Days.push(oneDate);
+        //
 
-        if(inital_Date_only===monthly_Date_Limit){
+
+        if (inital_Date_only===monthly_Date_Limit){
             inital_Date_only=0;
             inital_Month_only=inital_Month_only+1;
-        }
-        console.log("inital_Date_only: ",inital_Date_only);
-        console.log("monthly_Date_Limit: ",monthly_Date_Limit);
-        console.log("inital_Month_only: ",inital_Month_only);
-        console.log("end_Date_only: ",end_Date_only);
-        counter = counter+1;
-    } while (
-        (inital_Month_only <= end_Month_only) &&
-        (inital_year_only <= end_year_only) &&
-        (inital_Date_only <= monthly_Date_Limit)  &&
-        (inital_Date_only <= end_Date_only)
-        );
 
+        }
+
+
+        if (inital_Month_only===yearly_Month_Limit){
+            inital_Month_only=0;
+            inital_year_only=inital_year_only+1;
+
+        }
+        counter = counter+1;
+
+    }
 
     console.log("counter: ",counter);
 
-    //2016-04-08 //year-month-day
 
 
 
-
-    // console.log(` RPG => ${curr_year}-${curr_month}-${curruntDate}`);
-
-    // const newDateSelected=  `${curr_year}-${curr_month}-${curruntDate}`;
-
-
-    const allUserSName= state.user_Data_State_in_Slice.map((item: UserActivity) =>
-        item.profile.name).join(', ');
+    const allUserS: Profile= state.user_Data_State_in_Slice.map((item: UserActivity) =>
+        item.profile);
 
     // const allUserIDS= state.user_Data_State_in_Slice.map((item: UserActivity) =>
     //     item.toString).join(', ');
 
 
-    console.log("allUserSName::",allUserSName);
-    // console.log("allUserIDS::",allUserIDS);
-
-
-
-
-
-    const allDays= state.user_Data_State_in_Slice.map((item: UserActivity) =>
-        item.profile.name).join(', ');
-
-    const all__DateIDS= state.user_Data_State_in_Slice.map((item: UserActivity) =>
-        item.calendar.dateToDayId);
-
-
     // console.log("allUserSName::",allUserSName);
-    // console.log("JSON.stringify(all__DateIDS)::",all__DateIDS); // .json();
 
 
 
 
 
-    console.log("days: ",days);
+    /*
 
-    return;
-
-    // return;
-
-    console.log(`Selected date ${selectedDate} between startDate:${startDate} and endDate${endDate}`);
-
-    const fromDate = startDate.split('-');
-    // '2020-01-30T05:00:00.000Z'.split('-');
+    const RPG=  state.user_Data_State_in_Slice.map((item: UserActivity) =>
 
 
-    const compareDate = selectedDate.split('-');
-    //'2020-02-31T22:18:46Z'.split('-');  // false. should be true...
+                (Object.entries(item.calendar.dateToDayId))
 
 
-    const toDate = endDate.split('-');
-    //'2021-01-01T05:00:00.000Z'.split('-');
-
-
-
-
-
-
-
-
-
-    const someDate = new Date(oneDate_To_Filter);
-    const curruntDate =  (`0${someDate.getDate()}`).slice(-2); //d.getDate();
-    const curr_month = (`0${someDate.getMonth() + 1}`).slice(-2); //Months are zero based  // ("0" + (this.getMonth() + 1)).slice(-2)
-    const curr_year = someDate.getFullYear();
-
-    // console.log(` RPG => ${curr_year}-${curr_month}-${curruntDate}`);
-
-    const newDateSelected=  `${curr_year}-${curr_month}-${curruntDate}`;
-
-    for (let step = 0; step < temp__all_connect_later_Data.length; step++) {
-        console.log(temp__all_connect_later_Data[step].datetime);
-    }
-
-
-
-    const RPG_Filtered = temp__all_connect_later_Data.filter((oneItem: one_Tripz_connect_later_Data_interface) =>
-
-        /*
-        filter_SelectedDate_between_start_date_and_end_date(
-            oneItem.trip_start_date.toString(), // start date
-            oneItem.trip_end_date.toString(), // end date
-            newDateSelected,
-        )*/
-
-        filter_SelectedDate_between_start_date_and_end_date___4(
-            oneItem.trip_start_date.toString(), // start date
-            oneItem.trip_end_date.toString(), // end date
-            newDateSelected,
-
-        )
 
     );
-
-    // all_read_connect_tripz__later
-
-    console.log(" << RPG_Filtered.length >> : ", RPG_Filtered.length);
-    console.log("newDateSelected", newDateSelected);
-    console.log("temp__all_connect_later_Data:",temp__all_connect_later_Data);
+    */
 
 
 
-    state.read_connect_later_Data = RPG_Filtered;  // state.readFeedzData =RPG_Filtered;
-
-    state.total_size_connect_trip___later= RPG_Filtered.length;  //state.sizeOFTotalState_feedz= RPG_Filtered.length;
-    state.endReachedState_connect_trip____later=true;
+    state.all_Read_USER_Data= allUserS;
+    state.all_USER_Data= allUserS;  //state.sizeOFTotalState_feedz= RPG_Filtered.length;
+    // state.endReachedState_connect_trip____later=true;
 
 
 };
@@ -612,21 +486,56 @@ const checkDate=(some_Connect_LaterDate:string)=> {
 
 
 
+const filter_by_String = (state: any,
+                             action: PayloadAction<string>) => {
+
+
+    console.log(" at << filter_by_String >>");
+    const temp_Search_String = action.payload;
+
+
+    console.log("temp_Search_String: ",temp_Search_String);
+
+
+
+
+    if (temp_Search_String!==undefined){
+
+        const all_USER_Data_Temp =state.all_USER_Data;
+
+
+
+        const filtered_Peoples = all_USER_Data_Temp.filter((oneItem:Profile) => oneItem.name.toLocaleLowerCase().
+        match(temp_Search_String.toLocaleLowerCase()));
+
+        // state.read_active_partner_data = filteredActivePartners;
+        // state.read_active_partner_data.concat(newData);
+
+        // state.read_active_partner_data = state.read_active_partner_data.concat(newData);
+        // state.show_Loading__active_partnersSlice=false;
+
+
+        state.all_Read_USER_Data =filtered_Peoples;
+
+
+    }
+
+
+
+};
+
+
 
 // update_search_date_connect_Later2
-const reset_search0_Connect_Later4 = (state: any,
+const reset_search0 = (state: any,
                                       action: PayloadAction<null>) => {
 
 
     console.log(" at << reset_search >>");
 
-    const temp__connect__Later_Data = state.all_connect_later_Data; // state.feedzData;
-    state.read_connect_later_Data = temp__connect__Later_Data;  // state.readFeedzData = temp__readFeedzData;
 
-    // state.readFeedzData =RPG_Filtered;
-
-    state.total_size_connect_trip___later = temp__connect__Later_Data.length;
-    state.endReachedState_connect_trip____later= true;   // state.endReachedState_feedz= true;
+    // state.all_USER_Data =state.all_USER_Data;
+    state.all_Read_USER_Data = state.all_USER_Data;
 
 };
 
@@ -648,91 +557,12 @@ const UserAnalyzerSlice = createSlice({
 
 
         filter_Users_By_updated_2_date_intervals_1: filter_User_BY_Date_and_Status,
-        reset_search0_Connect_Later1:reset_search0_Connect_Later4,
+        reset_search:reset_search0,
+        filter_person_by_Search_String: filter_by_String,
         offline_Thus_loading_state_false_connect_Later: loading_false_connect_later,
 
     },
     extraReducers: (builder) => {
-
-
-
-        //1111 get_all_tripz_later_Async
-
-
-        builder.addCase(get_all_tripz_later_Async.pending, (state) => {
-            state.apiInovocatoinStatus = 'loading';
-            // console.log("_____state.apiInovocatoinStatus = 'loading'");
-        }).
-        addCase(get_all_tripz_later_Async.rejected, (
-            state,
-            action) => {
-            // [signupUser.rejected]: (state, { payload }) => {
-            // console.log("failed____");
-            console.log("_____state.apiInovocatoinStatus [get_all_tripz_later_Async] = 'failed____'");
-            state.apiInovocatoinStatus = "failed";
-            state.isFetching = false;
-            state.isSuccess= false;
-            state.isError= true;
-            // state.errorMessage= action.payload; // will be ASSIGNED LATER....
-
-        }).
-        addCase(get_all_tripz_later_Async.fulfilled,
-            (state,
-             action) => {
-                // console.log("(3)   idle____ [update_user_notification_Async ??");
-                state.apiInovocatoinStatus = "idle";
-                // console.log("_____state.apiInovocatoinStatus  [get_all_tripz_later_Async] = 'fulfilled___idle'");
-
-                state.isFetching = false;
-                state.isSuccess= true;
-                state.isError= false;
-                state.errorMessage= '';
-
-                const all_tripz_later_Response_Json= action.payload;
-
-                // console.log("[all_tripz_later_Response_Json]: ", all_tripz_later_Response_Json);
-
-                if ((Array.isArray(all_tripz_later_Response_Json) && !all_tripz_later_Response_Json.length))
-                {
-
-                    state.all_connect_later_Data = [];
-
-
-                }
-
-
-                    // NEW DATA CAME, THIS CONDITION....
-                // else  if (all_tripz_later_Response_Json.length + 1 !== state.all_connect_later_Data.length) {
-                else{
-
-
-
-
-
-
-                    const modified_Connect_LaterData = all_tripz_later_Response_Json.map(
-                        (
-                            obj:one_Tripz_connect_later_Data_interface,
-                            index1: number,
-                        ) => (
-                            {
-                                ...obj,
-                                id:  Number(obj.id),
-                                activity_id: Number(obj.activity_id),
-                                status: Number(obj.status),
-
-
-                            }
-                        )
-                    );
-
-
-                }
-
-
-            });
-
-
 
 
 
@@ -753,15 +583,16 @@ export const {
 
 
     filter_Users_By_updated_2_date_intervals_1,
-    reset_search0_Connect_Later1
+    filter_person_by_Search_String,
+    reset_search,
 
 
 
 } = UserAnalyzerSlice.actions;
 
 
-export const select_all_tripz_later_connect_Posts = (state: RootState) => state.UserAnalyzer_Reducer.all_connect_later_Data;
-
+export const select_ALL_Profiles_Hidded = (state: RootState) => state.UserAnalyzer_Reducer.all_USER_Data;
+export const select_ALL_Profiles = (state: RootState) => state.UserAnalyzer_Reducer.all_Read_USER_Data;
 
 
 

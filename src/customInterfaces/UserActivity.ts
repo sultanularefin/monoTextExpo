@@ -9,6 +9,7 @@ export interface UserActivity {
 export interface Profile {
     pictureUrl: string;
     name: string;
+    userID_Custom_Arefin: number,
 }
 
 export interface Day {
@@ -25,13 +26,17 @@ export interface Meal {
     type: string;
     goals: any[];
 }
+
+export interface dateToDayId_Interface{
+    x: number;
+}
 export interface Calendar {
     /*
     dateToDayId: {
         string: number;
     };
     */
-    dateToDayId: number;
+    dateToDayId: dateToDayId_Interface;
     dishIdToMealId: {
         string: number;
     };

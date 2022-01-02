@@ -248,7 +248,7 @@ const EditUserAnalyzer_Page: React.FC<EditUserAnalyzer_Page_Props> = ({props, na
 
         };
 
-        console.log("payLoad_update_Partner_Group_selected: ",payLoad_update_Partner_Group_selected);
+        // console.log("payLoad_update_Partner_Group_selected: ",payLoad_update_Partner_Group_selected);
 
         // dispatch(update_Forward_CheckBox_Selected_Grp_Partner(payLoad_update_Partner_Group_selected));
 
@@ -452,13 +452,25 @@ const EditUserAnalyzer_Page: React.FC<EditUserAnalyzer_Page_Props> = ({props, na
                         startDateValueState2={start_Date_Value_State}
                         showStartState2={show_Start_State}
                         showDatepickerStart2={show_Datepicker_Start}
+                        //@ts-ignore
+                        onChangeStartDate2={onChangeStartDate}
+                        modeStateStartTime2={modeStateStartTime}
                     />
+
+                    {/*start date ends here*/}
+
+                    {/*end date starts here*/}
+                    {/*999*/}
+
                     <EndDate
                         totalHeight={displayHeight}
                         totalWidth={displayWidth}
                         endDateValueState2={end_Date_Value_State}
                         showEndState2={show_End_State}
                         showDatepickerEndDate2={show_Datepicker_End_Date}
+                        //@ts-ignore
+                        onChangeEndDate2={onChangeEndDate}
+                        modeStateEndTime2={modeStateEndTime}
                     />
 
                     <View

@@ -23,60 +23,49 @@ import {
 import { Ionicons,Feather } from '@expo/vector-icons';
 
 import OneUser_View_withOther_Components from "./OneUser_View_withOther_Components";
+import {Profile} from "../../customInterfaces/UserActivity";
+// import {Profile} from "../../appStore/Reducers/authSlice";
 
 
 export interface User_Items_Props{
-    property:{
-        user:string,
-        uploadedBy:string,
-        date: Date,
-        itemId: number, //number[],
-        itemData:{
-            urlText:string,
-            imageURL: string, //string[],
-            nameText:string,
-            tagText:string,
-            detailText:string,
-            categoryText:string,
-            amountNumber:Number,
-        }
-        id: string,
-    },
+    property:Profile,
     currentIndex:number,
-
-
 }
 
 
-const User_Items: React.FC<User_Items_Props> =  (props) => {
+const User_Items: React.FC<User_Items_Props> =  ({
+                                                     property,
+
+                                                     currentIndex,
+                                                 }) => {
 
 
     const deviceWidth = Dimensions.get('window').width;
 
 
 
-    const index = props.currentIndex;
+    const index = currentIndex;
 
     const close1 = () => {
         console.log('.....close1...');
     };
 
 
-    let finalImageResouce ="https://image.freepik.com/free-psd/christmas-tree-armchair-3d-rendering_429483-293.jpg";
+    // let finalImageResouce ="https://image.freepik.com/free-psd/christmas-tree-armchair-3d-rendering_429483-293.jpg";
 
 
 
 
     // if (localIndex === 0) {
-    const oneElement = props.property;
-    const lastIndex2 = props.currentIndex;
+    // const oneElement = property;
+    // const lastIndex2 = currentIndex;
 
     return (
        <OneUser_View_withOther_Components
             key={index.toString()}
-            ImageResource = {finalImageResouce}
-            currentIndexLast ={lastIndex2}
-            property2 =  {oneElement}
+            ImageResource = {property.pictureUrl}
+            // currentIndexLast ={lastIndex2}
+            property2 =  {property}
             index = {index}
         />
 
