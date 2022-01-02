@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import {
+    Alert,
     FlatList,
     Image, KeyboardAvoidingView,
     Platform, SafeAreaView, ScrollView,
@@ -26,6 +27,10 @@ import CheckBoxComponent from "./userAnalyzerComponents_Android/CheckBoxComponen
 import {useAppDispatch} from "../appStore/app/hooks";
 import {CommonActions} from "@react-navigation/native";
 import UserAnalyzer_Page from "./UserAnalyzer_Page";
+import {
+    filter_Users_By_updated_2_date_intervals_1,
+    user_Filter_Payload_Interface
+} from "../appStore/Reducers/UserAnalyzerSlice";
 
 
 const calendarImage = require('../../assets/images/date_icon.png');
@@ -224,14 +229,50 @@ const EditUserAnalyzer_Page: React.FC<EditUserAnalyzer_Page_Props> = ({props, na
 
 
 
+
+
     const generate_Button_handler = async () => {
 
-        // const only_Selected_Group_Partner_Friends = forwardable_Group_or_PartnerList.filter(
-        //     (oneBYOne: forward_From_GroupChat_Interface) =>
-        //         oneBYOne.isSelected_For_Forward
-        // );
-    }
 
+        const startDate=  start_Date_Value_State?.toLocaleDateString('en-BD');
+
+        const endDate = end_Date_Value_State?.toLocaleDateString('en-BD');
+
+
+        if((startDate) && (endDate)){
+
+            const payLoad:user_Filter_Payload_Interface={
+
+                startDate:startDate,
+                endDate: endDate,
+                userCategory: all_Activity_Status_of_Users_State,
+            };
+
+            // console.log("before invoking dispatch222");
+
+            dispatch(filter_Users_By_updated_2_date_intervals_1(payLoad));
+
+            return navigation.navigate("Filter_People_Page")
+        }
+        else{
+            Alert.alert(
+                'startDate or endDate missing',
+                `StartDate (+${startDate} EndDate${endDate})?`,
+                [
+                    {
+                        text: "close",
+                        onPress: () => console.log("close Pressed"),
+                        style: "cancel",
+                    },
+
+
+                ],
+                {cancelable: true}
+            );
+
+        }
+
+    }
 
 
 
